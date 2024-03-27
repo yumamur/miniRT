@@ -1,7 +1,7 @@
-#ifndef _T_LIGHT_H
-# define _T_LIGHT_H
+#ifndef T_LIGHT_H
+# define T_LIGHT_H
 
-# include "./vector.h"
+# include "./t_vector.h"
 
 enum e_light_type
 {

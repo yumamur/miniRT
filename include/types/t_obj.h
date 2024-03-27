@@ -1,7 +1,7 @@
-#ifndef _T_OBJ_H
-# define _T_OBJ_H
+#ifndef T_OBJ_H
+# define T_OBJ_H
 
-# include "./vector.h"
+# include "./t_vector.h"
 
 enum e_obj_type
 {
@@ -19,12 +19,13 @@ typedef struct s_obj
 	t_v3			rotation;
 	t_v3			color;
 	_Bool			checkered;
-	void 			*data;
+	void			*data;
 }	t_obj;
 
-typedef t_obj t_plane;
+typedef t_obj	t_plane;
 
-typedef struct s_triangle {
+typedef struct s_triangle
+{
 	t_v3	v0;
 	t_v3	v1;
 	t_v3	v2;

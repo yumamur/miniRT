@@ -1,9 +1,9 @@
-#ifndef _T_CORE_H
-# define _T_CORE_H
+#ifndef T_CORE_H
+# define T_CORE_H
 
-# include "./vector.h"
-# include "./obj.h"
-# include "./light.h"
+# include "./t_vector.h"
+# include "./t_obj.h"
+# include "./t_light.h"
 
 typedef struct s_camera
 {

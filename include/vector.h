@@ -1,7 +1,7 @@
 #ifndef VECTOR_H
 # define VECTOR_H
 
-# include "types/vector.h"
+# include "types/t_vector.h"
 
 float	v2_len(t_v2 a);
 float	v2_dot(t_v2 a, t_v2 b);
