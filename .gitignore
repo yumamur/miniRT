@@ -2,9 +2,8 @@
 !README.md
 !.gitignore
 !src/
-!src/*.c
+!src/*
 !src/*/*.c
-!src/*.h
 !src/*/*.h
 !Makefile
 !LICENSE
