@@ -3,6 +3,8 @@
 !.gitignore
 !src/
 !src/*.c
+!src/*/*.c
 !src/*.h
+!src/*/*.h
 !Makefile
 !LICENSE
