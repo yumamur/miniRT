@@ -1,5 +1,5 @@
 #include <math.h>
-#include "../../include/types/t_vector.h"
+#include "./t_vector.h"
 
 float	vf3_dot(t_vf3 a, t_vf3 b)
 {
