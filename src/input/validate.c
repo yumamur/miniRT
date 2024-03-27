@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <fcntl.h>
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 
 static _Bool	validate_extension(char *filename, char *ext)
 {
