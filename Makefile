@@ -7,10 +7,20 @@ DEFINES		=
 INCLUDES	=
 
 LIB_MAC = -framework AppKit -framework OpenGL -L./minilibx/ -lmlx
-LIB_LNX = -lmlx -lXext -lX11
+LIB_LNX = -L./minilibx -lmlx -lXext -lX11 -lm
 
-LIBFT	=	libft/libft.a
+LIBFT	=	src/libft/libft.a
 LIBMLX		=	minilibx/libmlx.a
+
+SRC		=	src/main.c \
+			src/vector/v3_vec.c \
+			src/vector/v3_scal.c \
+			src/util/errno.c \
+			src/util/big_g.c \
+			src/input/read_util.c \
+			src/input/parse.c \
+			src/input/validate.c \
+			src/input/ft_atof.c
 
 .PHONY: all clean fclean re bonus debug
 
@@ -40,13 +50,14 @@ define download_minilibx_linux
 	@tar -xf minilibx-linux.tgz
 	@rm -f minilibx-linux.tgz
 	@mv minilibx-linux minilibx
+endef
 
 $(NAME): $(LIBFT) $(LIBMLX)
-	@$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) $(LIBFT) $(LIB_LNX) -o $(NAME) srcs/*.c
+	@$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $(NAME) $(SRC) $(LIBFT) $(LIB_LNX)
 
 $(LIBMLX):
-	@$(call download_minilibx_mac)
+	@$(call download_minilibx_linux)
 	@$(MAKE) -sC minilibx
 
 $(LIBFT):
-	@$(MAKE) -sC libft
+	@$(MAKE) bonus -sC src/libft
