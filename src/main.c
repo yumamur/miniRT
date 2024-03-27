@@ -1,6 +1,6 @@
 #include "../include/main.h"
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	void	*scene;
 
@@ -11,5 +11,5 @@ int main(int argc, char *argv[])
 		handle_error(1);
 	}
 	render(scene);
-	return 0;	
+	return (0);
 }

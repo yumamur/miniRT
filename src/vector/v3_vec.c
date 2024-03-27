@@ -1,15 +1,18 @@
-#include "../../include/types/vector.h"
 #include <math.h>
+#include "../../include/types/t_vector.h"
 
 extern float	v3_dot(t_v3 a, t_v3 b);
 
-t_v3	v3_norm(t_v3 v) {
-    float sq = v3_dot(v, v);
+t_v3	v3_norm(t_v3 v)
+{
+	float	sq;
 
-    if (fabs(sq) < 1e-12) {
-        return v;
-    }
-    return v * (1.0 / sqrt(sq));
+	sq = v3_dot(v, v);
+	if (fabs(sq) < 1e-12)
+	{
+		return (v);
+	}
+	return (v * (1.0 / sqrt(sq)));
 }
 
 t_v3	v3_proj(t_v3 a, t_v3 b)

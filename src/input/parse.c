@@ -25,7 +25,7 @@ static void	arr_free(void *data)
 	char	**arr;
 
 	i = 0;
-	arr  = data;
+	arr = data;
 	while (arr[i])
 	{
 		free(arr[i]);
