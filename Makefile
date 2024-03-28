@@ -1,7 +1,7 @@
 NAME	=	miniRT
 
 CC		=	clang
-CFLAGS	=	-Wall -Werror -Wextra -fenable-matrix -I./include
+CFLAGS	=	-Wall -Werror -Wextra
 
 DEFINES		=
 INCLUDES	=
@@ -12,23 +12,26 @@ LIB_LNX = -L./minilibx -lmlx -lXext -lX11 -lm
 LIBFT	=	src/libft/libft.a
 LIBMLX		=	minilibx/libmlx.a
 
-SRC		=	src/main.c \
-			src/vector/v3_vec.c \
-			src/vector/v3_scal.c \
-			src/util/errno.c \
-			src/util/big_g.c \
-			src/input/read_util.c \
-			src/input/parse.c \
-			src/input/validate.c \
-			src/input/ft_atof.c
+SRC		=	$(wildcard src/*.c) \
+			$(wildcard src/objects/*.c) \
+			$(wildcard src/parsing/*.c) \
+			$(wildcard src/util/*.c) \
+			$(wildcard src/vector/*.c)
+
+# $(wildcard src/rendering/*.c)
 
 .PHONY: all clean fclean re bonus debug
 
 all: $(NAME)
 
 clean:
+	@$(MAKE) -sC src/libft clean
+	@$(MAKE) -sC minilibx clean
 
 fclean: clean
+	@$(MAKE) -sC src/libft fclean
+	@$(MAKE) -sC minilibx clean
+	@rm -f $(NAME)
 
 re: fclean all
 
@@ -52,7 +55,7 @@ define download_minilibx_linux
 	@mv minilibx-linux minilibx
 endef
 
-$(NAME): $(LIBFT) $(LIBMLX)
+$(NAME): $(LIBFT) $(LIBMLX) $(SRC)
 	@$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $(NAME) $(SRC) $(LIBFT) $(LIB_LNX)
 
 $(LIBMLX):
@@ -60,4 +63,4 @@ $(LIBMLX):
 	@$(MAKE) -sC minilibx
 
 $(LIBFT):
-	@$(MAKE) bonus -sC src/libft
+	@$(MAKE) -sC src/libft

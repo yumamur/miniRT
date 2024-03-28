@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v3_scal.c                                          :+:      :+:    :+:   */
+/*   parse_util.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:01 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:04:01 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:02:58 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/28 21:02:59 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "./t_vector.h"
+#ifndef PARSE_UTIL_H
+# define PARSE_UTIL_H
 
-float	vf3_dot(t_vf3 a, t_vf3 b)
-{
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
+# include "../vector/t_vector.h"
 
-float	vf3_len(t_vf3 a)
-{
-	return (sqrtf(vf3_dot(a, a)));
-}
+_Bool	float_from_str(char *str, float *addr);
+_Bool	normal_float_from_str(char *str, float *addr);
+
+_Bool	color_from_str(char *str, t_vf3 *addr);
+_Bool	vf3_from_str(char *str, t_vf3 *addr);
+_Bool	normal_vf3_from_str(char *str, t_vf3 *addr);
+
+#endif

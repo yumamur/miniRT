@@ -1,14 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_core.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/28 21:03:23 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/29 00:50:02 by yumamur          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef T_CORE_H
 # define T_CORE_H
 
-# include "./t_obj.h"
-# include "./t_light.h"
+# include "../vector/t_vector.h"
+
+struct s_list;
 
 typedef struct s_camera
 {
 	t_vf3	position;
 	t_vf3	rotation;
-	t_vf3	direction;
+	t_vf3	orientation;
 	float	fov;
 }	t_camera;
 
@@ -25,10 +38,10 @@ typedef struct s_window
 
 typedef struct s_scene
 {
-	t_window	window;
-	t_camera	camera;
-	t_light		*lights;
-	t_obj		*objects;
+	t_window		window;
+	t_camera		camera;
+	struct s_list	*lights;
+	struct s_list	*objects;
 }	t_scene;
 
 #endif 

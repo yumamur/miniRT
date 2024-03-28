@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v3_scal.c                                          :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:01 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:04:01 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:03:08 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/28 21:10:40 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "./t_vector.h"
+#ifndef TOKENS_H
+# define TOKENS_H
 
-float	vf3_dot(t_vf3 a, t_vf3 b)
-{
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
+# define CAMERA_STR			"C"
+# define AMBIENT_LIGHT_STR	"A"
+# define POINT_LIGHT_STR	"L"
+# define SPOT_LIGHT_STR		"sl"
+# define SPHERE_STR			"sp"
+# define PLANE_STR			"pl"
+# define CYLINDER_STR		"cy"
+# define TRIANGLE_STR		"tr"
+# define CONE_STR			"cn"
 
-float	vf3_len(t_vf3 a)
-{
-	return (sqrtf(vf3_dot(a, a)));
-}
+extern int	get_key(char *key);
+
+#endif

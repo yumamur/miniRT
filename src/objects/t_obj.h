@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   t_obj.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/28 21:03:27 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/29 00:52:37 by yumamur          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef T_OBJ_H
 # define T_OBJ_H
 
@@ -12,42 +24,40 @@ enum e_obj_type
 	CONE,
 };
 
-typedef struct s_obj
+typedef struct s_obj_base
 {
 	enum e_obj_type	type;
 	t_vf3			position;
 	t_vf3			rotation;
 	t_vf3			color;
-	float			reflective;
+	float			reflectivity;
 	_Bool			checkered;
-	void			*data;
-}	t_obj;
+	void			*obj;
+}	t_obj_base;
 
-typedef t_obj	t_plane;
+typedef t_obj_base	t_plane;
 
 typedef struct s_triangle
 {
-	t_vf3	v0;
-	t_vf3	v1;
-	t_vf3	v2;
+	t_obj_base	base;
+	t_vf3		v0;
+	t_vf3		v1;
+	t_vf3		v2;
 }	t_triangle;
 
 typedef struct s_sphere
 {
-	float	radius;
+	t_obj_base	base;
+	float		radius;
 }	t_sphere;
 
 typedef struct s_cylinder
 {
-	float	height;
-	float	radius;
+	t_obj_base	base;
+	float		height;
+	float		radius;
 }	t_cylinder;
 
-typedef struct s_cone
-{
-	float	height;
-	float	top_radius;
-	float	bottom_radius;
-}	t_cone;
+typedef t_cylinder	t_cone;
 
 #endif

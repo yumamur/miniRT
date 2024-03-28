@@ -1,24 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v3_scal.c                                          :+:      :+:    :+:   */
+/*   arr_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:01 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:04:01 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:03:36 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/29 00:28:25 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "./t_vector.h"
+#include <stdlib.h>
 
-float	vf3_dot(t_vf3 a, t_vf3 b)
+void	arr_free(void *data)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
+	void	**arr;
+	int		i;
+
+	i = 0;
+	arr = (void **)data;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }
 
-float	vf3_len(t_vf3 a)
+size_t	arr_len(void **data)
 {
-	return (sqrtf(vf3_dot(a, a)));
+	size_t	i;
+
+	if (!data || !*data)
+		return (0);
+	i = 0;
+	while (data[i])
+		i++;
+	return (i);
 }
