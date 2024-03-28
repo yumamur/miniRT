@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:10 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 00:48:16 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/03/29 01:50:50 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static _Bool	is_file_available(char *filename)
 
 _Bool	is_valid(int argc, char *argv[])
 {
-	
 	if (argc != 2)
 		return (0);
 	if (argv[1] && *argv[1] != '\0' && ft_strlen(argv[1]) > 4

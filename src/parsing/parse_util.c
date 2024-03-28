@@ -6,14 +6,16 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:56 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:29:04 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/03/29 02:02:15 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../vector/t_vector.h"
 #include "../util/util.h"
+#include <stdio.h>
 
+_Bool	is_int(char *str);
 _Bool	is_float(char *str);
 float	ft_atof(char *str);
 _Bool	in_range_f(float f, float min, float max);
@@ -39,13 +41,15 @@ _Bool	vf3_from_str(char *str, t_vf3 *addr)
 {
 	char	**tab;
 
+	printf("STR: %s\n", str);
 	tab = ft_split(str, ',');
-	if (!tab || !tab[0] || !is_float(tab[0])
-		|| !tab[1] || !is_float(tab[1])
-		|| !tab[2] || !is_float(tab[2]))
+	printf("VF3: %s\t%s\t%s\n", tab[0], tab[1], tab[2]);
+	if (!tab || !tab[0] || !(is_float(tab[0]) || is_int(tab[0]))
+		|| !tab[1] || !(is_float(tab[1]) || is_int(tab[1]))
+		|| !tab[2] || !(is_float(tab[2]) || is_int(tab[2])))
 		return (0);
 	addr->x = ft_atof(tab[0]);
-	addr->y =  ft_atof(tab[1]);
+	addr->y = ft_atof(tab[1]);
 	addr->z = ft_atof(tab[2]);
 	arr_free(tab);
 	return (1);

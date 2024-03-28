@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:15 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:25:10 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/03/29 02:02:46 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	*str_to_wordtab(void *line)
 	return (tab);
 }
 
-static void parse_line_into_scene(char *line, t_scene *scene)
+static void	parse_line_into_scene(char *line, t_scene *scene)
 {
 	char	**tab;
 	void	*data;
@@ -87,7 +87,7 @@ t_scene	parse(char *filename)
 			break ;
 		if (ft_strlen(line) >= 10)
 		{
-			line[ft_strlen(line) - 2] = '\0';
+			line[ft_strlen(line) - 1] = '\0';
 			parse_line_into_scene(line, &scene);
 		}
 		free(line);

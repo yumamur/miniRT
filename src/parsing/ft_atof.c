@@ -6,9 +6,18 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:24 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:44:23 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/03/29 02:05:11 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+_Bool	is_int(char *str)
+{
+	if (*str == '-')
+		str++;
+	while (*str >= '0' && *str <= '9')
+		str++;
+	return (!*str);	
+}
 
 _Bool	is_float(char *str)
 {
@@ -16,8 +25,6 @@ _Bool	is_float(char *str)
 		str++;
 	while (*str >= '0' && *str <= '9')
 		str++;
-	if (!*str)
-		return (1);
 	if (*str == '.')
 		str++;
 	while (*str >= '0' && *str <= '9')

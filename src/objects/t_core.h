@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:23 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 00:50:02 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/03/29 01:50:58 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../vector/t_vector.h"
 
-struct s_list;
+struct	s_list;
 
 typedef struct s_camera
 {
