@@ -39,9 +39,8 @@ SRCS  = ft_atoi.c \
 		ft_substr.c \
 		ft_strtrim.c \
 		ft_tolower.c \
-		ft_toupper.c
-
-BSRCS = ft_lstdelone_bonus.c \
+		ft_toupper.c \
+		ft_lstdelone_bonus.c \
 		ft_lstmap_bonus.c \
 		ft_lstclear_bonus.c \
 		ft_lstlast_bonus.c \
@@ -49,10 +48,11 @@ BSRCS = ft_lstdelone_bonus.c \
 		ft_lstnew_bonus.c \
 		ft_lstsize_bonus.c \
 		ft_lstadd_back_bonus.c \
-		ft_lstadd_front_bonus.c
+		ft_lstadd_front_bonus.c \
+		get_next_line.c \
+		get_next_line_utils.c
 
 OBJS 	= $(SRCS:%.c=%.o)
-BOBJS	= $(BSRCS:%.c=%.o)
 
 all:	$(NAME)
 
@@ -87,8 +87,6 @@ $(NAME):	$(OBJS)
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
-bonus: $(OBJS) $(BOBJS)
-	@ar -rcs $(NAME) $(OBJS) $(BOBJS)
 
 clean:
 	@rm -rf $(OBJS) $(BOBJS)
@@ -98,4 +96,4 @@ fclean: clean
 
 re:	fclean all
 
-.PHONY:	all clean fclean re bonus
+.PHONY:	all clean fclean re

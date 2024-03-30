@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v3_scal.c                                          :+:      :+:    :+:   */
+/*   parse_camera.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:01 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:04:01 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/29 01:50:21 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/29 01:50:25 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math.h>
-#include "./t_vector.h"
+#include "../objects/t_core.h"
+#include "../util/util.h"
+#include "./parse_util.h"
 
-float	vf3_dot(t_vf3 a, t_vf3 b)
+t_camera	parse_camera(char **tab)
 {
-	return (a.x * b.x + a.y * b.y + a.z * b.z);
-}
+	t_camera	cam;
 
-float	vf3_len(t_vf3 a)
-{
-	return (sqrtf(vf3_dot(a, a)));
+	cam = (t_camera){};
+	if (!tab || arr_len(tab) != 4)
+		return (cam);
+	if (vf3_from_str(tab[1], &cam.position)
+		&& normal_vf3_from_str(tab[2], &cam.orientation)
+		&& float_from_str(tab[3], &cam.fov))
+		return (cam);
+	return ((t_camera){});
 }

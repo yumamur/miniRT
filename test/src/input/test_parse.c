@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   test_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:02:11 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:10:17 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:01:58 by yumamur           #+#    #+#             */
+/*   Updated: 2024/03/29 01:09:36 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./main.h"
-#include "objects/t_core.h"
-#include "objects/t_light.h"
-#include "objects/t_obj.h"
-#include "libft/libft.h"
 #include <stdio.h>
+#include "../../../src/libft/libft.h"
+#include "../../../src/objects/t_core.h"
+#include "../../../src/objects/t_obj.h"
+#include "../../../src/objects/t_light.h"
 
-void render(t_scene *scene)
+t_scene	*parse(char *filename);
+
+void	display_scene_data(t_scene *scene)
 {
-	printf("Rendering scene\n");
 	printf("Camera:\n");
 	printf("  position: %f %f %f\n", scene->camera.position.x, scene->camera.position.y, scene->camera.position.z);
 	printf("  orientation: %f %f %f\n", scene->camera.orientation.x, scene->camera.orientation.y, scene->camera.orientation.z);
@@ -53,16 +53,18 @@ void render(t_scene *scene)
 	// ft_lstclear(scene, free);
 }
 
+// void	test_parse(void)
+// {
+// 	t_scene	*scene;
+
+// 	scene = parse("test_file");
+// 	// assert(scene->camera.fov == 0);
+// 	// assert(scene->objects == NULL);
+// 	// assert(scene->lights == NULL);
+// }
+
 int	main(int argc, char *argv[])
 {
-	t_scene	scene;
-
-	if (!is_valid(argc, argv))
-		return (1);
-	scene = parse(argv[1]);
-	if (!scene.camera.fov || !scene.objects || !scene.lights)
-		// TODO: free scene
-		return (0);
-	render(&scene);
-	return (0);
+	(void)argc;
+	display_scene_data(parse(argv[1]));
 }
