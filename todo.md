@@ -1,0 +1,1 @@
+(A) Minilibix window create

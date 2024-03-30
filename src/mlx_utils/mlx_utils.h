@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   mlx_utils.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mugurel <mugurel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:02:08 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/30 06:52:13 by mugurel          ###   ########.fr       */
+/*   Created: 2024/03/30 04:24:05 by mugurel           #+#    #+#             */
+/*   Updated: 2024/03/30 05:56:05 by mugurel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef MLX_UTILS_H
+# define MLX_UTILS_H
 
-# include "objects/t_core.h"
-# include "mlx_utils/mlx_utils.h"
-# include "render/render.h"
+# define WIDTH 400
+# define HEIGHT 400
 
-void	handle_error(int error_code);
+typedef struct s_mlx_data
+{
+    void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_mlx_data;
 
-_Bool	is_valid(int argc, char *argv[]);
-t_scene	parse(char *filename);
+void    mlx_initialize(t_mlx_data *mlx_data);
+void    my_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
+int     create_trgb(int r, int g, int b, int o);
 
-#endif
+#endif 
