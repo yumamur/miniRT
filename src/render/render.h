@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.h                                             :+:      :+:    :+:   */
+/*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mugurel <mugurel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:02:08 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/30 06:52:13 by mugurel          ###   ########.fr       */
+/*   Created: 2024/03/30 06:23:03 by mugurel           #+#    #+#             */
+/*   Updated: 2024/03/30 06:56:06 by mugurel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_H
-# define MAIN_H
+#ifndef RENDER_H
+# define RENDER_H
 
-# include "objects/t_core.h"
-# include "mlx_utils/mlx_utils.h"
-# include "render/render.h"
+# include "../mlx_utils/mlx_utils.h"
+# include "../objects/t_core.h"
+# include "../libft/libft.h"
+# include "../objects/t_light.h"
+# include "../objects/t_obj.h"
+# include <stdio.h>
 
-void	handle_error(int error_code);
 
-_Bool	is_valid(int argc, char *argv[]);
-t_scene	parse(char *filename);
+void	render(t_scene *scene, t_mlx_data *mlx_data);
 
 #endif

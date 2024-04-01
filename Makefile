@@ -16,7 +16,9 @@ SRC		=	$(wildcard src/*.c) \
 			$(wildcard src/objects/*.c) \
 			$(wildcard src/parsing/*.c) \
 			$(wildcard src/util/*.c) \
-			$(wildcard src/vector/*.c)
+			$(wildcard src/vector/*.c) \
+			$(wildcard src/mlx_utils/*.c) \
+			$(wildcard src/render/*.c)
 
 # $(wildcard src/rendering/*.c)
 
