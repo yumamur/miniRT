@@ -18,5 +18,8 @@ lib/libft/*.o
 !test/*/*
 !test/*/*/*.c
 !test/*/*/*.h
+
 !Makefile
 !LICENSE
+!note/
+!note/*
