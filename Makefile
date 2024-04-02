@@ -40,6 +40,7 @@ re: fclean all
 bonus:
 
 debug: CFLAGS += -g
+debug: $(NAME)
 
 define download_minilibx_mac
 	@echo "Downloading minilibx..."

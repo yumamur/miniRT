@@ -6,9 +6,12 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:24 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 02:05:11 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/02 22:19:47 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <math.h>
+#include "../libft/libft.h"
 
 _Bool	is_int(char *str)
 {
@@ -16,7 +19,7 @@ _Bool	is_int(char *str)
 		str++;
 	while (*str >= '0' && *str <= '9')
 		str++;
-	return (!*str);	
+	return (!*str);
 }
 
 _Bool	is_float(char *str)
@@ -34,28 +37,29 @@ _Bool	is_float(char *str)
 
 float	ft_atof(char *str)
 {
-	float	res;
+	float	result;
 	float	dec;
+	float	c_dec;
 	int		sign;
 
-	res = 0;
+	result = 0;
 	dec = 0;
 	sign = 1;
-	if (*str == '-')
-	{
+	c_dec = 0;
+	if (*str == '-' && str++)
 		sign = -1;
-		str++;
-	}
 	while (*str >= '0' && *str <= '9')
-		res = res * 10 + *str++ - '0';
+		result = result * 10 + *str++ - '0';
 	if (*str == '.')
-		str++;
-	while (*str >= '0' && *str <= '9')
 	{
-		dec = dec * 10 + *str++ - '0';
-		res *= 10;
+		str++;
+		while (*str >= '0' && *str <= '9' && ++c_dec)
+		{
+			dec = dec * 10 + *str - '0';
+			str++;
+		}
 	}
-	return ((res + dec) * sign);
+	return (sign * (result + dec / pow(10, c_dec)));
 }
 
 _Bool	in_range_f(float f, float min, float max)
