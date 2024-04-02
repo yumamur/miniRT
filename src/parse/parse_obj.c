@@ -6,11 +6,11 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:54 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:53:10 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 01:11:50 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "libft.h"
 #include "../objects/t_obj.h"
 #include "../util/util.h"
 #include "./parse_util.h"
@@ -29,10 +29,10 @@ t_obj_base	*parse_sphere(char **tab)
 		return (NULL);
 	sp->base.type = SPHERE;
 	sp->base.obj = sp;
-	if (vf3_from_str(tab[1], &sp->base.position)
-		&& float_from_str(tab[2], &sp->radius)
-		&& color_from_str(tab[3], &sp->base.color)
-		&& normal_float_from_str(tab[4], &sp->base.reflectivity))
+	if (valid_ato_vf3(tab[1], &sp->base.position)
+		&& valid_atof(tab[2], &sp->radius)
+		&& valid_ato_rgb(tab[3], &sp->base.color)
+		&& valid_normal_atof(tab[4], &sp->base.reflectivity))
 		return (&sp->base);
 	free(sp);
 	return (NULL);
@@ -49,10 +49,10 @@ t_obj_base	*parse_plane(char **tab)
 		return (NULL);
 	pl->type = PLANE;
 	pl->obj = pl;
-	if (vf3_from_str(tab[1], &pl->position)
-		&& vf3_from_str(tab[2], &pl->rotation)
-		&& color_from_str(tab[3], &pl->color)
-		&& normal_float_from_str(tab[4], &pl->reflectivity))
+	if (valid_ato_vf3(tab[1], &pl->position)
+		&& valid_ato_vf3(tab[2], &pl->rotation)
+		&& valid_ato_rgb(tab[3], &pl->color)
+		&& valid_normal_atof(tab[4], &pl->reflectivity))
 		return (pl);
 	free(pl);
 	return (NULL);
@@ -69,11 +69,11 @@ t_obj_base	*parse_triangle(char **tab)
 		return (NULL);
 	tr->base.type = TRIANGLE;
 	tr->base.obj = tr;
-	if (vf3_from_str(tab[1], &tr->v0)
-		&& vf3_from_str(tab[2], &tr->v1)
-		&& vf3_from_str(tab[3], &tr->v2)
-		&& color_from_str(tab[4], &tr->base.color)
-		&& normal_float_from_str(tab[5], &tr->base.reflectivity))
+	if (valid_ato_vf3(tab[1], &tr->v0)
+		&& valid_ato_vf3(tab[2], &tr->v1)
+		&& valid_ato_vf3(tab[3], &tr->v2)
+		&& valid_ato_rgb(tab[4], &tr->base.color)
+		&& valid_normal_atof(tab[5], &tr->base.reflectivity))
 		return (&tr->base);
 	free(tr);
 	return (NULL);
@@ -90,12 +90,12 @@ t_obj_base	*parse_cylinder(char **tab, enum e_obj_type type)
 		return (NULL);
 	cy->base.type = type;
 	cy->base.obj = cy;
-	if (vf3_from_str(tab[1], &cy->base.position)
-		&& vf3_from_str(tab[2], &cy->base.rotation)
-		&& float_from_str(tab[3], &cy->height)
-		&& float_from_str(tab[4], &cy->radius)
-		&& color_from_str(tab[5], &cy->base.color)
-		&& normal_float_from_str(tab[6], &cy->base.reflectivity))
+	if (valid_ato_vf3(tab[1], &cy->base.position)
+		&& valid_ato_vf3(tab[2], &cy->base.rotation)
+		&& valid_atof(tab[3], &cy->height)
+		&& valid_atof(tab[4], &cy->radius)
+		&& valid_ato_rgb(tab[5], &cy->base.color)
+		&& valid_normal_atof(tab[6], &cy->base.reflectivity))
 		return (&cy->base);
 	free(cy);
 	return (NULL);

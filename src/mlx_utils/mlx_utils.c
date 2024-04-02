@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mugurel <mugurel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 04:26:46 by mugurel           #+#    #+#             */
-/*   Updated: 2024/03/30 05:56:12 by mugurel          ###   ########.fr       */
+/*   Updated: 2024/04/03 01:05:44 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minilibx/mlx.h"
 #include "./mlx_utils.h"
-#include <stdio.h>
+#include "mlx.h"
 
 void	mlx_initialize(t_mlx_data *mlx_data)
 {

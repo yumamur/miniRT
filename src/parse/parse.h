@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.h                                       :+:      :+:    :+:   */
+/*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:02:58 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:02:59 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/02 22:51:55 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/03 01:27:07 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_UTIL_H
-# define PARSE_UTIL_H
+#ifndef PARSE_H
+# define PARSE_H
 
-# include "../vector/t_vector.h"
+struct s_scene;
 
-_Bool	float_from_str(char *str, float *addr);
-_Bool	normal_float_from_str(char *str, float *addr);
-
-_Bool	color_from_str(char *str, t_vf3 *addr);
-_Bool	vf3_from_str(char *str, t_vf3 *addr);
-_Bool	normal_vf3_from_str(char *str, t_vf3 *addr);
+struct s_scene	parse(char *filename);
+_Bool			is_file_valid(int argc, char *argv[]);
 
 #endif

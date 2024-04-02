@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:23 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:50:58 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 01:04:11 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_window
 typedef struct s_scene
 {
 	t_window		window;
-	t_camera		camera;
+	struct s_list	*cameras;
 	struct s_list	*lights;
 	struct s_list	*objects;
 }	t_scene;

@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.c                                       :+:      :+:    :+:   */
+/*   parse_util_num.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:56 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 02:02:15 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 01:07:43 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "libft.h"
 #include "../vector/t_vector.h"
 #include "../util/util.h"
-#include <stdio.h>
 
 _Bool	is_int(char *str);
 _Bool	is_float(char *str);
 float	ft_atof(char *str);
 _Bool	in_range_f(float f, float min, float max);
 
-_Bool	float_from_str(char *str, float *addr)
+_Bool	valid_atof(char *str, float *addr)
 {
 	if (!str || !is_float(str))
 		return (0);
@@ -28,38 +27,34 @@ _Bool	float_from_str(char *str, float *addr)
 	return (1);
 }
 
-_Bool	normal_float_from_str(char *str, float *addr)
+_Bool	valid_normal_atof(char *str, float *addr)
 {
-	if (!float_from_str(str, addr))
+	if (!valid_atof(str, addr))
 		return (0);
 	if (!in_range_f(*addr, 0, 1))
 		return (0);
 	return (1);
 }
 
-_Bool	vf3_from_str(char *str, t_vf3 *addr)
+_Bool	valid_ato_vf3(char *str, t_vf3 *addr)
 {
 	char	**tab;
 
-	printf("STR: %s\n", str);
 	tab = ft_split(str, ',');
-	printf("VF3: %s\t%s\t%s\n", tab[0], tab[1], tab[2]);
 	if (!tab || !tab[0] || !(is_float(tab[0]) || is_int(tab[0]))
 		|| !tab[1] || !(is_float(tab[1]) || is_int(tab[1]))
 		|| !tab[2] || !(is_float(tab[2]) || is_int(tab[2])))
 		return (0);
-	addr->x = ft_atof(tab[0]);
-	addr->y = ft_atof(tab[1]);
-	addr->z = ft_atof(tab[2]);
+	*addr = (t_vf3){ft_atof(tab[0]), ft_atof(tab[1]), ft_atof(tab[2])};
 	arr_free(tab);
 	return (1);
 }
 
-_Bool	color_from_str(char *str, t_vf3 *addr)
+_Bool	valid_ato_rgb(char *str, t_vf3 *addr)
 {
 	_Bool	ret;
 
-	ret = vf3_from_str(str, addr);
+	ret = valid_ato_vf3(str, addr);
 	if (ret && !in_range_f(addr->x, 0, 255)
 		&& !in_range_f(addr->y, 0, 255)
 		&& !in_range_f(addr->z, 0, 255))
@@ -67,11 +62,11 @@ _Bool	color_from_str(char *str, t_vf3 *addr)
 	return (ret);
 }
 
-_Bool	normal_vf3_from_str(char *str, t_vf3 *addr)
+_Bool	valid_normal_atovf3(char *str, t_vf3 *addr)
 {
 	_Bool	ret;
 
-	ret = vf3_from_str(str, addr);
+	ret = valid_ato_vf3(str, addr);
 	if (ret && !in_range_f(addr->x, -1, 1)
 		&& !in_range_f(addr->y, -1, 1)
 		&& !in_range_f(addr->z, -1, 1))

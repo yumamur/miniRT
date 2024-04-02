@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   parse_util.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:03:08 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:10:40 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:02:58 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/03 01:13:18 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#ifndef PARSE_UTIL_H
+# define PARSE_UTIL_H
 
-# define CAMERA_STR			"C"
-# define AMBIENT_LIGHT_STR	"A"
-# define POINT_LIGHT_STR	"L"
-# define SPOT_LIGHT_STR		"sl"
-# define SPHERE_STR			"sp"
-# define PLANE_STR			"pl"
-# define CYLINDER_STR		"cy"
-# define TRIANGLE_STR		"tr"
-# define CONE_STR			"cn"
+# include "../vector/t_vector.h"
 
-extern int	get_key(char *key);
+void	*str_to_wordtab(void *line);
+
+_Bool	valid_atof(char *str, float *addr);
+_Bool	valid_normal_atof(char *str, float *addr);
+
+_Bool	valid_ato_rgb(char *str, t_vf3 *addr);
+_Bool	valid_ato_vf3(char *str, t_vf3 *addr);
+_Bool	valid_normal_atovf3(char *str, t_vf3 *addr);
 
 #endif

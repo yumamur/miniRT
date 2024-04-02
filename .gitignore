@@ -7,6 +7,12 @@
 !src/*.h
 !src/*/*.c
 !src/*/*.h
+
+!lib/
+!lib/libft/
+!lib/libft/*
+lib/libft/*.o
+
 !test/
 !test/scenes
 !test/*/*

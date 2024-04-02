@@ -6,12 +6,12 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:24 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/02 22:19:47 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 00:55:41 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
-#include "../libft/libft.h"
+#include "libft.h"
 
 _Bool	is_int(char *str)
 {

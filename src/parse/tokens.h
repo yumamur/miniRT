@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arr_util.c                                         :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:03:36 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 01:37:43 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:03:08 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/03 00:47:05 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef TOKENS_H
+# define TOKENS_H
 
-void	arr_free(void *data)
-{
-	void	**arr;
-	int		i;
+# define CAMERA_STR			"C"
+# define AMBIENT_LIGHT_STR	"A"
+# define POINT_LIGHT_STR	"L"
+# define SPOT_LIGHT_STR		"sl"
+# define SPHERE_STR			"sp"
+# define PLANE_STR			"pl"
+# define CYLINDER_STR		"cy"
+# define TRIANGLE_STR		"tr"
+# define CONE_STR			"cn"
 
-	i = 0;
-	arr = (void **)data;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
+int	get_key(char *key);
 
-unsigned int	arr_len(void **data)
-{
-	size_t	i;
-
-	if (!data || !*data)
-		return (0);
-	i = 0;
-	while (data[i])
-		i++;
-	return (i);
-}
+#endif
