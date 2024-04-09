@@ -6,12 +6,12 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:54 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 01:11:50 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:42:11 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "../objects/t_obj.h"
+#include "../objects/objects.h"
 #include "../util/util.h"
 #include "./parse_util.h"
 #include "./tokens.h"
@@ -20,84 +20,72 @@
 
 t_obj_base	*parse_sphere(char **tab)
 {
-	t_sphere	*sp;
+	t_obj_base	base;
+	float		radius;
 
 	if (!tab || arr_len(tab) != 5)
 		return (NULL);
-	sp = ft_calloc(1, sizeof(t_sphere));
-	if (!sp)
-		return (NULL);
-	sp->base.type = SPHERE;
-	sp->base.obj = sp;
-	if (valid_ato_vf3(tab[1], &sp->base.position)
-		&& valid_atof(tab[2], &sp->radius)
-		&& valid_ato_rgb(tab[3], &sp->base.color)
-		&& valid_normal_atof(tab[4], &sp->base.reflectivity))
-		return (&sp->base);
-	free(sp);
+	base = (t_obj_base){0};
+	if (valid_ato_vf3(tab[1], &base.position)
+		&& valid_atof(tab[2], &radius)
+		&& valid_ato_rgb(tab[3], &base.color)
+		&& valid_normal_atof(tab[4], &base.reflectivity))
+		return (new_sphere(radius, base));
 	return (NULL);
 }
 
 t_obj_base	*parse_plane(char **tab)
 {
-	t_plane	*pl;
+	t_obj_base	base;
 
 	if (!tab || arr_len(tab) != 5)
 		return (NULL);
-	pl = ft_calloc(1, sizeof(t_plane));
-	if (!pl)
-		return (NULL);
-	pl->type = PLANE;
-	pl->obj = pl;
-	if (valid_ato_vf3(tab[1], &pl->position)
-		&& valid_ato_vf3(tab[2], &pl->rotation)
-		&& valid_ato_rgb(tab[3], &pl->color)
-		&& valid_normal_atof(tab[4], &pl->reflectivity))
-		return (pl);
-	free(pl);
+	base = (t_obj_base){0};
+	if (valid_ato_vf3(tab[1], &base.position)
+		&& valid_ato_vf3(tab[2], &base.rotation)
+		&& valid_ato_rgb(tab[3], &base.color)
+		&& valid_normal_atof(tab[4], &base.reflectivity))
+		return (new_plane(base));
 	return (NULL);
 }
 
 t_obj_base	*parse_triangle(char **tab)
 {
-	t_triangle	*tr;
+	t_obj_base	base;
+	t_vf3		v[3];
 
 	if (!tab || arr_len(tab) != 7)
 		return (NULL);
-	tr = ft_calloc(1, sizeof(t_triangle));
-	if (!tr)
-		return (NULL);
-	tr->base.type = TRIANGLE;
-	tr->base.obj = tr;
-	if (valid_ato_vf3(tab[1], &tr->v0)
-		&& valid_ato_vf3(tab[2], &tr->v1)
-		&& valid_ato_vf3(tab[3], &tr->v2)
-		&& valid_ato_rgb(tab[4], &tr->base.color)
-		&& valid_normal_atof(tab[5], &tr->base.reflectivity))
-		return (&tr->base);
-	free(tr);
+	base = (t_obj_base){0};
+	if (valid_ato_vf3(tab[1], &(v[0]))
+		&& valid_ato_vf3(tab[2], &(v[1]))
+		&& valid_ato_vf3(tab[3], &(v[2]))
+		&& valid_ato_rgb(tab[4], &base.color)
+		&& valid_normal_atof(tab[5], &base.reflectivity))
+		return (new_triangle(v[0], v[1], v[2], base));
 	return (NULL);
 }
 
 t_obj_base	*parse_cylinder(char **tab, enum e_obj_type type)
 {
-	t_cylinder	*cy;
+	t_obj_base	base;
+	float		height;
+	float		radius;
 
 	if (!tab || arr_len(tab) != 7)
 		return (NULL);
-	cy = ft_calloc(1, sizeof(t_cylinder));
-	if (!cy)
-		return (NULL);
-	cy->base.type = type;
-	cy->base.obj = cy;
-	if (valid_ato_vf3(tab[1], &cy->base.position)
-		&& valid_ato_vf3(tab[2], &cy->base.rotation)
-		&& valid_atof(tab[3], &cy->height)
-		&& valid_atof(tab[4], &cy->radius)
-		&& valid_ato_rgb(tab[5], &cy->base.color)
-		&& valid_normal_atof(tab[6], &cy->base.reflectivity))
-		return (&cy->base);
-	free(cy);
+	base = (t_obj_base){0};
+	if (valid_ato_vf3(tab[1], &base.position)
+		&& valid_ato_vf3(tab[2], &base.rotation)
+		&& valid_atof(tab[3], &height)
+		&& valid_atof(tab[4], &radius)
+		&& valid_ato_rgb(tab[5], &base.color)
+		&& valid_normal_atof(tab[6], &base.reflectivity))
+	{
+		if (type == CONE)
+			return (new_cone(radius, height, base));
+		return (new_cylinder(radius, height, base));
+	}
 	return (NULL);
 }
 

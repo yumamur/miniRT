@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:15 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 01:37:57 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:44:00 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 #include "../util/util.h"
 #include "../objects/objects.h"
 
-t_list		*read_file(char *filename);
+t_list			*read_file(char *filename);
 
-_Bool		is_camera(char *str);
-_Bool		is_light(char *str);
-_Bool		is_object(char *str);
+_Bool			is_camera(char *str);
+_Bool			is_light(char *str);
+_Bool			is_object(char *str);
 
-t_camera	*parse_camera(char **tab);
-t_light		*parse_light(char **tab);
-t_obj_base	*parse_obj(char **tab);
+t_camera		*parse_camera(char **tab);
+t_light_base	*parse_light(char **tab);
+t_obj_base		*parse_obj(char **tab);
 
 static void	parse_line_into_scene(char *line, t_scene *scene)
 {

@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/04/03 01:23:30 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 23:23:28 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 
 //}
 
-void render(t_scene *scene, t_mlx_data *mlx_data)
+void	render(t_scene *scene, t_mlx_data *mlx_data)
 {
 	int	x;
 	int	y;
 
 	x = 0;
 	y = 0;
-	while(x < 400)
+	while (x < 400)
 	{
-		while(y < 400)
+		while (y < 400)
 		{
-			my_mlx_pixel_put(mlx_data, x, y, create_trgb(255,255,255,255));
+			my_mlx_pixel_put(mlx_data, x, y, create_trgb(255, 255, 255, 255));
 			y++;
 		}
 		x++;

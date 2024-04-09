@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:56 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 01:07:43 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/08 16:47:13 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ _Bool	valid_ato_vf3(char *str, t_vf3 *addr)
 	char	**tab;
 
 	tab = ft_split(str, ',');
-	if (!tab || !tab[0] || !(is_float(tab[0]) || is_int(tab[0]))
-		|| !tab[1] || !(is_float(tab[1]) || is_int(tab[1]))
-		|| !tab[2] || !(is_float(tab[2]) || is_int(tab[2])))
+	if (!tab && !tab[0] && !(is_float(tab[0]) || is_int(tab[0]))
+		&& !tab[1] && !(is_float(tab[1]) || is_int(tab[1]))
+		&& !tab[2] && !(is_float(tab[2]) || is_int(tab[2])))
 		return (0);
 	*addr = (t_vf3){ft_atof(tab[0]), ft_atof(tab[1]), ft_atof(tab[2])};
 	arr_free(tab);

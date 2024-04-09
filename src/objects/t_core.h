@@ -6,16 +6,15 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:23 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 01:04:11 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:29:34 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef T_CORE_H
 # define T_CORE_H
 
+# include "libft.h"
 # include "../vector/t_vector.h"
-
-struct	s_list;
 
 typedef struct s_camera
 {
