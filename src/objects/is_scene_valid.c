@@ -6,12 +6,13 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:22:35 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:22:35 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:52:52 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "objects.h"
 #include "libft.h"
+#include "../util/fake_globals.h"
 
 static _Bool	is_cameras_valid(t_list *cameras)
 {
@@ -55,8 +56,11 @@ static _Bool	is_objects_valid(t_list *objects)
 	return (1);
 }
 
-_Bool	is_scene_valid(t_scene *scene)
+_Bool	is_scene_valid(void)
 {
+	t_scene	*scene;
+
+	scene = scene_location();
 	if (!scene)
 		return (0);
 	if (!scene->cameras || !scene->lights || !scene->objects)

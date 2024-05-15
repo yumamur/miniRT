@@ -6,20 +6,24 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:38 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:03:38 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:55:43 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	*g0(void)
+#include "fake_globals.h"
+#include "../objects/t_core.h"
+#include "../mlx_utils/mlx_utils.h"
+
+struct s_scene	*scene_location(void)
 {
-	static void	*g;
+	static struct s_scene	g;
 
 	return (&g);
 }
 
-void	*g1(void)
+struct s_mlx_data	*mlx_data_location(void)
 {
-	static void	*g;
+	static struct s_mlx_data	g;
 
 	return (&g);
 }

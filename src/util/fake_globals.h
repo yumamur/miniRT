@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.h                                       :+:      :+:    :+:   */
+/*   fake_globals.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:02:58 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/10 16:14:09 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/11 11:36:07 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/11 11:51:18 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_UTIL_H
-# define PARSE_UTIL_H
+#ifndef FAKE_GLOBALS_H
+# define FAKE_GLOBALS_H
 
-# include "../vector/t_vector.h"
+struct	s_scene;
+struct	s_mlx_data;
 
-void	*str_to_wordtab(void *line);
-
-_Bool	valid_atof(char *str, float *addr);
-_Bool	valid_normal_atof(char *str, float *addr);
-
-_Bool	valid_ato_rgb(char *str, t_vf3 *addr);
-_Bool	valid_ato_vf3(char *str, t_vf3 *addr);
-_Bool	valid_normal_atovf3(char *str, t_vf3 *addr);
+struct s_scene		*scene_location(void);
+struct s_mlx_data	*mlx_data_location(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:23 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/09 18:29:34 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:13:39 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,4 @@ typedef struct s_scene
 	struct s_list	*objects;
 }	t_scene;
 
-#endif 
+#endif

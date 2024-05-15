@@ -6,12 +6,15 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 22:51:55 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:23:38 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:45:18 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
+
+# include <fcntl.h>
+# include "libft.h"
 
 struct	s_scene;
 

@@ -21,19 +21,28 @@ SRC		=	$(wildcard src/objects/*.c) \
 			$(wildcard src/mlx_utils/*.c) \
 			$(wildcard src/render/*.c)
 
-# $(wildcard src/rendering/*.c)
-
 .PHONY: all clean fclean re bonus debug
 
 all: $(NAME)
 
+clean: OPR := clean
 clean:
-	@$(MAKE) -sC lib/libft clean
-	@$(MAKE) -sC lib/minilibx clean
+	@if [ -e "lib/libft" ]; then \
+		echo "Cleaning libft..."; \
+		$(MAKE) -sC lib/libft $(OPR); \
+	else \
+		echo "Libft not found"; \
+	fi
+	@if [ -e "lib/minilibx" ]; then \
+		echo "Cleaning minilibx..."; \
+		$(MAKE) -sC lib/minilibx $(OPR); \
+	else \
+		echo "Minilibx not found"; \
+	fi
 
+fclean: OPR := fclean
 fclean: clean
-	@$(MAKE) -sC lib/libft fclean
-	@$(MAKE) -sC lib/minilibx clean
+	@echo "Cleaning miniRT..."
 	@rm -f $(NAME)
 
 re: fclean all
@@ -47,26 +56,30 @@ asan: CFLAGS += -fsanitize=address
 asan: $(NAME)
 
 define download_minilibx_mac
-	@echo "Downloading minilibx..."
-	@wget -q "https://cdn.intra.42.fr/document/document/18334/minilibx_opengl.tgz"
-	@tar -xf minilibx_opengl.tgz
-	@rm -f minilibx_opengl.tgz
-	@mv minilibx_opengl lib/minilibx
+	echo "Downloading minilibx..."; \
+	wget -q "https://cdn.intra.42.fr/document/document/18334/minilibx_opengl.tgz"; \
+	tar -xf minilibx_opengl.tgz; \
+	rm -f minilibx_opengl.tgz; \
+	mv minilibx_opengl lib/minilibx
 endef
 
 define download_minilibx_linux
-	@echo "Downloading minilibx..."
-	@wget -q "https://cdn.intra.42.fr/document/document/18333/minilibx-linux.tgz"
-	@tar -xf minilibx-linux.tgz
-	@rm -f minilibx-linux.tgz
-	@mv minilibx-linux lib/minilibx
+	echo "Downloading minilibx..."; \
+	wget -q "https://cdn.intra.42.fr/document/document/18333/minilibx-linux.tgz"; \
+	tar -xf minilibx-linux.tgz; \
+	rm -f minilibx-linux.tgz; \
+	mv minilibx-linux lib/minilibx
 endef
 
 $(NAME): $(LIBFT) $(LIBMLX) $(MAIN) $(SRC)
+	@echo "Compiling miniRT..."
 	@$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $(NAME) $(MAIN) $(SRC) $(LIBFT) $(LIB_LNX)
 
 $(LIBMLX):
-	@$(call download_minilibx_linux)
+	@if [ -z "lib/minilibx" ]; then \
+		$(call download_minilibx_linux); \
+	fi
+	@echo "Compiling minilibx..."
 	@$(MAKE) -sC lib/minilibx
 
 $(LIBFT):

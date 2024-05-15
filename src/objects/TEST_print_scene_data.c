@@ -6,13 +6,15 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:28:51 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:54:43 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:49:53 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "objects.h"
+#include "../util/fake_globals.h"
 #include "libft.h"
+#include "objects.h"
+
+#include <stdio.h>
 
 void	print_camera_datas(t_list *cs)
 {
@@ -24,19 +26,19 @@ void	print_camera_datas(t_list *cs)
 	{
 		c = (t_camera *)cs->content;
 		printf(" index: %d\n", i++);
-		printf("  position: %f %f %f\n",
+		printf("  position: %.2f %.2f %.2f\n",
 			c->position.x,
 			c->position.y,
 			c->position.z);
-		printf("  orientation: %f %f %f\n",
+		printf("  orientation: %.2f %.2f %.2f\n",
 			c->orientation.x,
 			c->orientation.y,
 			c->orientation.z);
-		printf("  rotation: %f %f %f\n",
+		printf("  rotation: %.2f %.2f %.2f\n",
 			c->rotation.x,
 			c->rotation.y,
 			c->rotation.z);
-		printf("  fov: %f\n", c->fov);
+		printf("  fov: %.2f\n", c->fov);
 		cs = cs->next;
 	}
 }
@@ -51,13 +53,16 @@ void	print_light_datas(t_list *ls)
 	{
 		l = (t_light_base *)ls->content;
 		printf(" index: %d\n", i++);
-		printf("  type: %d\n", l->type);
-		// printf("  position: %f %f %f\n",
-		// 	l->position.x,
-		// 	l->position.y,
-		// 	l->position.z);
-		printf("  color: %f %f %f\n", l->color.x, l->color.y, l->color.z);
-		// printf("  intensity: %f\n", l->intensity);
+		printf("  type: %s\n",
+			l->type == AMBIENT_LIGHT
+			? "Ambient"
+			: l->type == SPOT_LIGHT
+				? "Spot"
+				: l->type == POINT_LIGHT
+					? "Point"
+					: "None"
+		);
+		printf("  color: %.2f %.2f %.2f\n", l->color.x, l->color.y, l->color.z);
 		ls = ls->next;
 	}
 }
@@ -73,22 +78,25 @@ void	print_object_datas(t_list *obj)
 		o = (t_obj_base *)obj->content;
 		printf(" index: %d\n", i++);
 		printf("  type: %d\n", o->type);
-		printf("  position: %f %f %f\n",
+		printf("  position: %.2f %.2f %.2f\n",
 			o->position.x,
 			o->position.y,
 			o->position.z);
-		printf("  rotation: %f %f %f\n",
+		printf("  rotation: %.2f %.2f %.2f\n",
 			o->rotation.x,
 			o->rotation.y,
 			o->rotation.z);
-		printf("  color: %f %f %f\n", o->color.x, o->color.y, o->color.z);
-		printf("  reflectivity: %f\n", o->reflectivity);
+		printf("  color: %.2f %.2f %.2f\n", o->color.x, o->color.y, o->color.z);
+		printf("  reflectivity: %.2f\n", o->reflectivity);
 		obj = obj->next;
 	}
 }
 
-void	put_scene_data(t_scene *scene)
+void	put_scene_data(void)
 {
+	t_scene	*scene;
+
+	scene = scene_location();
 	printf("Rendering scene\n");
 	printf("Cameras:\n");
 	print_camera_datas(scene->cameras);

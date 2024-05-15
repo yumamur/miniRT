@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 04:24:05 by mugurel           #+#    #+#             */
-/*   Updated: 2024/04/03 23:25:43 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/11 18:15:07 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ typedef struct s_mlx_data
 	int		endian;
 }	t_mlx_data;
 
-void	mlx_initialize(t_mlx_data *mlx_data);
-void	my_mlx_pixel_put(t_mlx_data *data, int x, int y, int color);
+void	mlx_initialize(void);
+void	my_mlx_pixel_put(int x, int y, int color);
 int		create_trgb(int r, int g, int b, int o);
 
-#endif 
+#endif

@@ -6,18 +6,14 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:15 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/09 18:44:00 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:14:51 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parse.h"
-#include <fcntl.h>
-#include "libft.h"
 #include "./parse_util.h"
 #include "../util/util.h"
 #include "../objects/objects.h"
-
-t_list			*read_file(char *filename);
 
 _Bool			is_camera(char *str);
 _Bool			is_light(char *str);
@@ -49,10 +45,10 @@ t_scene	parse(char *filename)
 	char	*line;
 	t_scene	scene;
 
-	scene = (t_scene){};
+	scene = (t_scene){0};
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
-		return ((t_scene){});
+		return ((t_scene){0});
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -68,7 +64,6 @@ t_scene	parse(char *filename)
 	close(fd);
 	return (scene);
 }
-
 /*
 C	-50,0,20		0,0,0		70
 

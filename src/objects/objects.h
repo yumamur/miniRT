@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:22:47 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/09 18:44:31 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/11 11:46:25 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include "libft.h"
 
 // TODO: remove this
-void			put_scene_data(t_scene *scene);
+void			put_scene_data(void);
 
-_Bool			is_scene_valid(t_scene *scene);
-void			clean_scene(t_scene *scene);
+_Bool			is_scene_valid(void);
+void			clean_scene(void);
 
 t_camera		*new_camera(t_vf3 position, t_vf3 orientation, float fov);
 t_light_base	*new_ambient_light(float ratio, t_vf3 color);
