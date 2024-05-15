@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokens.h                                           :+:      :+:    :+:   */
+/*   parse_util_str.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:03:08 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:10:40 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/03 23:23:44 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/03 23:23:45 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENS_H
-# define TOKENS_H
+#include "libft.h"
 
-# define CAMERA_STR			"C"
-# define AMBIENT_LIGHT_STR	"A"
-# define POINT_LIGHT_STR	"L"
-# define SPOT_LIGHT_STR		"sl"
-# define SPHERE_STR			"sp"
-# define PLANE_STR			"pl"
-# define CYLINDER_STR		"cy"
-# define TRIANGLE_STR		"tr"
-# define CONE_STR			"cn"
+void	*str_to_wordtab(void *line)
+{
+	char	**tab;
+	char	*tmp;
+	int		i;
 
-extern int	get_key(char *key);
-
-#endif
+	tab = ft_split(line, ' ');
+	i = 0;
+	while (tab[i])
+	{
+		tmp = ft_strtrim(tab[i], "\t\n\v\f\r");
+		free(tab[i]);
+		tab[i] = tmp;
+		i++;
+	}
+	return (tab);
+}

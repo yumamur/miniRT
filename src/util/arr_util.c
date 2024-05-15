@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:36 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 00:28:25 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 01:37:43 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	arr_free(void *data)
 	free(arr);
 }
 
-size_t	arr_len(void **data)
+unsigned int	arr_len(void **data)
 {
 	size_t	i;
 

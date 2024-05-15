@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:24 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:03:25 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:45:19 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,33 @@ enum e_light_type
 	SPOT_LIGHT
 };
 
-typedef struct s_light
+typedef struct s_light_base
 {
 	enum e_light_type	type;
-	t_vf3				position;
 	t_vf3				color;
-	float				intensity;
-	t_vf3				direction;
-	float				penumbra;
-}	t_light;
+	void				*light;
+}	t_light_base;
+
+typedef struct s_point_light
+{
+	t_light_base	base;
+	t_vf3			position;
+	float			intensity;
+}	t_point_light;
+
+typedef struct s_ambient_light
+{
+	t_light_base	base;
+	float			ratio;
+}	t_ambient_light;
+
+typedef struct s_spot_light
+{
+	t_light_base	base;
+	t_vf3			position;
+	t_vf3			direction;
+	float			intensity;
+	float			angle;
+}	t_spot_light;
 
 #endif

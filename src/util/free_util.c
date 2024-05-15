@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_camera.c                                     :+:      :+:    :+:   */
+/*   free_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 01:50:21 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:50:25 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/03 23:23:53 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/03 23:23:54 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../objects/t_core.h"
-#include "../util/util.h"
-#include "./parse_util.h"
+#include <stdlib.h>
 
-t_camera	parse_camera(char **tab)
+void	free_non_null(void *data)
 {
-	t_camera	cam;
+	if (data)
+		free(data);
+}
 
-	cam = (t_camera){};
-	if (!tab || arr_len(tab) != 4)
-		return (cam);
-	if (vf3_from_str(tab[1], &cam.position)
-		&& normal_vf3_from_str(tab[2], &cam.orientation)
-		&& float_from_str(tab[3], &cam.fov))
-		return (cam);
-	return ((t_camera){});
+void	free_and_null(void *data)
+{
+	if (data)
+		free(data);
+	data = NULL;
 }

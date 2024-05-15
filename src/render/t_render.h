@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_vector.h                                         :+:      :+:    :+:   */
+/*   t_render.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:00 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:36:33 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/11 17:17:23 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/11 17:19:01 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_VECTOR_H
-# define T_VECTOR_H
+#ifndef T_RENDER_H
+# define T_RENDER_H
 
-typedef float	t_vf2 __attribute__((ext_vector_type(2)));
-typedef float	t_vf3 __attribute__((ext_vector_type(3)));
+# include "../vector/vector.h"
+
+typedef struct s_ray
+{
+	t_vf3	origin;
+	t_vf3	direction;
+}	t_ray;
 
 #endif

@@ -1,0 +1,43 @@
+# Module Interface
+
+1. Module
+  - Is a collection of related functions and variables.
+  - Should be self-contained and independent of other modules, except where dependencies are explicitly declared.
+  - Should have a well-defined interface that exposes only the functions and variables that are intended to be used by other modules.
+  - Should have an 'interface header' file that defines its interface.
+
+  1.2. Header: https://public.websites.umich.edu/~eecs381/handouts/CHeaderFileGuidelines.pdf
+    - Should contain the declarations of the functions and variables that are part of the module's interface.
+    - Should be placed in the root of the module, in the same directory as the module's source files.
+	- Must not include any other headers, except for those that are part of the module's interface.
+
+  1.3. Source:
+    - Should contain the implementation of the functions and variables that are part of the module's interface.
+    - Should be named the same as the module, with a '.c' extension.
+    - Should be placed in the root of the module, in the same directory as the module's header file.
+    - Should include the module's header file as the first include in the file.
+
+2. Dependencies
+  - Are the other modules that a module depends on to function correctly.
+  - Should be declared in the module's header file.
+  - Should be minimized to reduce coupling between modules.
+
+3. Encapsulation
+  - Is the practice of hiding the implementation details of a module from other modules.
+  - Should be used to ensure that a module's interface is well-defined and consistent.
+
+4. Testing
+  - Is the process of verifying that a module behaves as expected.
+  - Should be done using unit tests that exercise the module's interface.
+  - Should be limited to the module's interface to ensure that the module is self-contained and independent of other modules.
+  - Should be localized to the module to ensure that changes to the module do not break other modules.
+  - Should be located in a correspondng directory to the module, in the 'test' directory of the project's root.
+
+5. Documentation
+  - Is the descriptions of a module's interface and implementation.
+  - Should be done using comments in the module's header and source files.
+  - Should be clear, concise, and consistent.
+  - Should be updated whenever the module's interface or implementation changes.
+  - Should be dated and signed by the author.
+
+

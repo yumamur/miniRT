@@ -6,11 +6,11 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:31 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:53:13 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/03 00:55:43 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
+#include "libft.h"
 #include "./tokens.h"
 
 int	get_key(char *key)

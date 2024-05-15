@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_vector.h                                         :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:00 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:36:33 by yumamur          ###   ########.fr       */
+/*   Created: 2024/03/28 21:03:08 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/10 16:14:05 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_VECTOR_H
-# define T_VECTOR_H
+#ifndef TOKENS_H
+# define TOKENS_H
 
-typedef float	t_vf2 __attribute__((ext_vector_type(2)));
-typedef float	t_vf3 __attribute__((ext_vector_type(3)));
+# define CAMERA_STR			"C"
+# define AMBIENT_LIGHT_STR	"A"
+# define POINT_LIGHT_STR	"L"
+# define SPOT_LIGHT_STR		"sl"
+# define SPHERE_STR			"sp"
+# define PLANE_STR			"pl"
+# define CYLINDER_STR		"cy"
+# define TRIANGLE_STR		"tr"
+# define CONE_STR			"cn"
+
+int	get_key(char *key);
 
 #endif

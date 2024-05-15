@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_vector.h                                         :+:      :+:    :+:   */
+/*   clean_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:00 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:36:33 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/03 23:22:15 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/11 11:49:29 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_VECTOR_H
-# define T_VECTOR_H
+#include "objects.h"
+#include "libft.h"
+#include "../util/util.h"
+#include "../util/fake_globals.h"
 
-typedef float	t_vf2 __attribute__((ext_vector_type(2)));
-typedef float	t_vf3 __attribute__((ext_vector_type(3)));
+void	clean_scene(void)
+{
+	t_scene	*scene;
 
-#endif
+	scene = scene_location();
+	ft_lstclear(&scene->cameras, free_non_null);
+	ft_lstclear(&scene->lights, free_non_null);
+	ft_lstclear(&scene->objects, free_non_null);
+}

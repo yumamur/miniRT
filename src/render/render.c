@@ -3,68 +3,90 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mugurel <mugurel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/03/30 06:56:42 by mugurel          ###   ########.fr       */
+/*   Updated: 2024/04/15 02:28:32 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
+#include "./t_render.h"
+#include "mlx.h"
+#include "libft.h"
+#include "../util/fake_globals.h"
+#include "../objects/objects.h"
+#include "../mlx_utils/mlx_utils.h"
+
+#include <stdio.h>
 
 //unsigned int    pixelshader(t_scene *scene, int x, int y)
 //{
 
 //}
 
-void render(t_scene *scene, t_mlx_data *mlx_data)
+t_vf3	g_cam = 0;
+t_vf3	g_aqua = 0;
+t_vf3	g_white = 1.0;
+
+void	set_gcam(void)
 {
-	int	x;
-	int	y;
+	// t_camera	cam;
 
-	x = 0;
+	// cam = *(t_camera *)scene_location()->cameras->content;
+	// g_cam = cam.position;
+}
+
+int	color_vf_int(t_vf3 clr, int o)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = (int)(clr.r * 255.0f);
+	g = (int)(clr.g * 255.0f);
+	b = (int)(clr.b * 255.0f);
+	printf("%d \n", (int) (clr[0] * 255.0f));
+	return (o << 24 | r << 16 | g << 8 | b);
+}
+
+t_ray	create_ray(int x, int y)
+{
+	static t_vf3	up_left = (t_vf3){-2.0f, 1.0f, -1.0f};
+	static t_vf3	horizontal = (t_vf3){4.0f, 0, 0};
+	static t_vf3	vertical = (t_vf3){0, 2.0f, 0};
+
+	float u = x / WIDTH;
+	float v = y / HEIGHT;
+
+	return ((t_ray){.origin = g_cam, .direction = up_left + u * horizontal + v * verticalr});
+}
+
+void	color(t_mlx_data *mlx, int x, int y, t_ray ray)
+{
+	t_vf3	unit;
+	float	t;
+
+	unit = vf3_norm(ray.direction);
+	t = .5 * (unit.y + 1.0);
+	unsigned int clr = color_vf_int(vf3_lerp(g_white, g_aqua, t), 255);
+	mlx_pixel_put(mlx->mlx, mlx->win, x, y, clr);
+}
+
+
+int	render(void)
+{
+	int			x;
+	int			y;
+	t_mlx_data	*data;
+
+	set_gcam();
+	data = mlx_data_location();
 	y = 0;
-	while(x < 400)
+	while (y++ < HEIGHT)
 	{
-		while(y < 400)
-		{
-			my_mlx_pixel_put(mlx_data, x, y, create_trgb(255,255,255,255));
-			y++;
-		}
-		x++;
-		y = 0;
+		x = 0;
+		while (x++ < WIDTH)
+			color(data, x, y, create_ray(x, y));
 	}
-
-	printf("Rendering scene\n");
-	printf("Camera:\n");
-	printf("  position: %f %f %f\n", scene->camera.position.x, scene->camera.position.y, scene->camera.position.z);
-	printf("  orientation: %f %f %f\n", scene->camera.orientation.x, scene->camera.orientation.y, scene->camera.orientation.z);
-	printf("  rotation: %f %f %f\n", scene->camera.rotation.x, scene->camera.rotation.y, scene->camera.rotation.z);
-	printf("  fov: %f\n", scene->camera.fov);
- 
-	int i = 0;
-	printf("\nLights:\n");
-	for (t_list *light = scene->lights; light; light = light->next)
-	{
-		t_light *l = light->content;
-		printf(" index: %d\n", i++);
-		printf("  type: %d\n", l->type);
-		printf("  position: %f %f %f\n", l->position.x, l->position.y, l->position.z);
-		printf("  color: %f %f %f\n", l->color.x, l->color.y, l->color.z);
-		printf("  intensity: %f\n", l->intensity);
-	}
- 
-	i = 0;
-	printf("\nObjects:\n");
-	for (t_list *obj = scene->objects; obj; obj = obj->next)
-	{
-		t_obj_base *o = obj->content;
-		printf(" index: %d\n", i++);
-		printf("  type: %d\n", o->type);
-		printf("  position: %f %f %f\n", o->position.x, o->position.y, o->position.z);
-		printf("  rotation: %f %f %f\n", o->rotation.x, o->rotation.y, o->rotation.z);
-		printf("  color: %f %f %f\n", o->color.x, o->color.y, o->color.z);
-		printf("  reflectivity: %f\n", o->reflectivity);
-	}
-	// // ft_lstclear(scene, free);
+	return (0);
 }

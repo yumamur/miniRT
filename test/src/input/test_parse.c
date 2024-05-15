@@ -6,10 +6,11 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:01:58 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/29 01:09:36 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/04/02 22:31:51 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <assert.h>
 #include <stdio.h>
 #include "../../../src/libft/libft.h"
 #include "../../../src/objects/t_core.h"
@@ -66,5 +67,12 @@ void	display_scene_data(t_scene *scene)
 int	main(int argc, char *argv[])
 {
 	(void)argc;
-	display_scene_data(parse(argv[1]));
+	t_scene	*scene;
+
+	scene = parse(argv[1]);
+	assert(scene != NULL, "scene is NULL");
+	assert(scene->camera.fov != 0, "camera fov is 0");
+	assert(scene->objects != NULL, "objects is NULL");
+	assert(scene->lights != NULL, "lights is NULL");
+	display_scene_data(scene);
 }

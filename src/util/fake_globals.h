@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_vector.h                                         :+:      :+:    :+:   */
+/*   fake_globals.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:04:00 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:36:33 by yumamur          ###   ########.fr       */
+/*   Created: 2024/04/11 11:36:07 by yumamur           #+#    #+#             */
+/*   Updated: 2024/04/11 11:51:18 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef T_VECTOR_H
-# define T_VECTOR_H
+#ifndef FAKE_GLOBALS_H
+# define FAKE_GLOBALS_H
 
-typedef float	t_vf2 __attribute__((ext_vector_type(2)));
-typedef float	t_vf3 __attribute__((ext_vector_type(3)));
+struct	s_scene;
+struct	s_mlx_data;
+
+struct s_scene		*scene_location(void);
+struct s_mlx_data	*mlx_data_location(void);
 
 #endif
