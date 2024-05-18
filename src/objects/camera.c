@@ -6,14 +6,15 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:23:58 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 23:23:59 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 06:52:33 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "objects.h"
 #include "libft.h"
+#include "../util/fake_globals.h"
 
-t_camera	*new_camera(t_vf3 position, t_vf3 orientation, float fov)
+t_camera	*new_camera(t_vf3 position, t_vf3 look_at, float fov)
 {
 	t_camera	*cam;
 
@@ -21,8 +22,17 @@ t_camera	*new_camera(t_vf3 position, t_vf3 orientation, float fov)
 	if (!cam)
 		return (NULL);
 	cam->position = position;
-	cam->orientation = orientation;
+	cam->look_at = look_at;
 	cam->fov = fov;
-	cam->rotation = (t_vf3){0, 0, 0};
 	return (cam);
+}
+
+t_camera	*get_camera(int i)
+{
+	t_list	*ptr;
+
+	ptr = scene_location()->cameras;
+	while (ptr && i--)
+		ptr = ptr->next;
+	return (ptr->content);
 }

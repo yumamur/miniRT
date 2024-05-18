@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:49 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/09 18:43:49 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/15 18:27:07 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	*parse_spot_light(char **tab)
 	if (!tab || arr_len(tab) != 6)
 		return (NULL);
 	if (valid_ato_vf3(tab[1], &position)
-		&& valid_normal_atovf3(tab[2], &direction)
+		&& valid_normal_ato_vf3(tab[2], &direction)
 		&& valid_normal_atof(tab[3], &intensity)
 		&& valid_normal_atof(tab[4], &angle)
 		&& valid_ato_rgb(tab[5], &color))

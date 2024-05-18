@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 04:26:46 by mugurel           #+#    #+#             */
-/*   Updated: 2024/04/11 14:10:25 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 06:55:29 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+void	clean_scene(void);
+
 int	handle_exit(void *param)
 {
 	(void)param;
-	exit(0);
+	clean_scene();
+	mlx_loop_end(mlx_data_location()->mlx);
+	return (0);
 }
 
 int	handle_key(int key, void *param)
 {
 	(void)param;
-	printf("%d\n", key);
 	if (key == 65307)
-		exit(0);
+		handle_exit(param);
 	else if (key == 53)
 		render();
 	return (0);
@@ -52,30 +55,3 @@ void	mlx_initialize(void)
 	mlx_hook(mlx_data->win, 17, 0, handle_exit, NULL);
 	mlx_hook(mlx_data->win, 2, 1L << 0, handle_key, NULL);
 }
-
-void	my_mlx_pixel_put(int x, int y, int color)
-{
-	t_mlx_data	*data;
-	char		*dst;
-
-	data = mlx_data_location();
-	dst = data->addr
-		+ (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-#if BYTE_ORDER == LITTLE_ENDIAN
-
-int	create_trgb(int r, int g, int b, int o)
-{
-	return (o << 24 | r << 16 | g << 8 | b);
-}
-
-#elif BYTE_ORDER == BIG_ENDIAN
-
-int	create_trgb(int r, int g, int b, int o)
-{
-	return (o << 24 | b << 16 | g << 8 | r);
-}
-
-#endif
