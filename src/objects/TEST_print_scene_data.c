@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:28:51 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 11:49:53 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 00:59:52 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,10 @@ void	print_camera_datas(t_list *cs)
 			c->position.x,
 			c->position.y,
 			c->position.z);
-		printf("  orientation: %.2f %.2f %.2f\n",
-			c->orientation.x,
-			c->orientation.y,
-			c->orientation.z);
-		printf("  rotation: %.2f %.2f %.2f\n",
-			c->rotation.x,
-			c->rotation.y,
-			c->rotation.z);
+		printf("  look_at: %.2f %.2f %.2f\n",
+			c->look_at.x,
+			c->look_at.y,
+			c->look_at.z);
 		printf("  fov: %.2f\n", c->fov);
 		cs = cs->next;
 	}

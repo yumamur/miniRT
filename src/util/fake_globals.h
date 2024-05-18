@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 11:36:07 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 11:51:18 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 07:00:09 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,6 @@ struct	s_mlx_data;
 
 struct s_scene		*scene_location(void);
 struct s_mlx_data	*mlx_data_location(void);
+struct s_ray		*rays_location(void);
 
 #endif

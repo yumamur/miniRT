@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:22:47 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 11:46:25 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 07:00:03 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ t_obj_base		*new_plane(t_obj_base base);
 t_obj_base		*new_triangle(t_vf3 a, t_vf3 b, t_vf3 c, t_obj_base base);
 t_obj_base		*new_cylinder(float radius, float height, t_obj_base base);
 t_obj_base		*new_cone(float radius, float height, t_obj_base base);
+
+t_camera		*get_camera(int i);
 
 #endif

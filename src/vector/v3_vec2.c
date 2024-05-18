@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_util.h                                       :+:      :+:    :+:   */
+/*   v3_vec2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/28 21:02:58 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/15 18:27:05 by yumamur          ###   ########.fr       */
+/*   Created: 2024/05/16 07:14:36 by yumamur           #+#    #+#             */
+/*   Updated: 2024/05/16 07:16:37 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_UTIL_H
-# define PARSE_UTIL_H
+#include "vector.h"
+#include <math.h>
 
-# include "../vector/t_vector.h"
+t_vf3	vf3_clamp(t_vf3 v, float min, float max)
+{
+	t_vf3	clamped;
 
-void	*str_to_wordtab(void *line);
-
-_Bool	valid_atof(char *str, float *addr);
-_Bool	valid_normal_atof(char *str, float *addr);
-
-_Bool	valid_ato_rgb(char *str, t_vf3 *addr);
-_Bool	valid_ato_vf3(char *str, t_vf3 *addr);
-_Bool	valid_normal_ato_vf3(char *str, t_vf3 *addr);
-
-#endif
+	clamped.x = fminf(fmaxf(v.x, min), max);
+	clamped.y = fminf(fmaxf(v.y, min), max);
+	clamped.z = fminf(fmaxf(v.z, min), max);
+	return (clamped);
+}

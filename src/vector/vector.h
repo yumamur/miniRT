@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:04:04 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 18:04:04 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 07:16:50 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ t_vf3	vf3_proj(t_vf3 a, t_vf3 b);
 t_vf3	vf3_cross(t_vf3 a, t_vf3 b);
 t_vf3	vf3_reflect(t_vf3 a, t_vf3 b);
 t_vf3	vf3_lerp(t_vf3 a, t_vf3 b, float t);
+t_vf3	vf3_clamp(t_vf3 v, float min, float max);
 
 #endif

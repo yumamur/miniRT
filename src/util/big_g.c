@@ -6,33 +6,34 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:38 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 11:55:43 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 00:56:57 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fake_globals.h"
+#include "../render/t_render.h"
 #include "../objects/t_core.h"
 #include "../mlx_utils/mlx_utils.h"
 
-struct s_scene	*scene_location(void)
+t_scene	*scene_location(void)
 {
-	static struct s_scene	g;
+	static t_scene	g;
 
 	return (&g);
 }
 
-struct s_mlx_data	*mlx_data_location(void)
+t_mlx_data	*mlx_data_location(void)
 {
-	static struct s_mlx_data	g;
+	static t_mlx_data	g;
 
 	return (&g);
 }
 
-void	*g2(void)
+t_ray	*rays_location(void)
 {
-	static void	*g;
+	static t_ray	g[WIDTH * HEIGHT];
 
-	return (&g);
+	return (g);
 }
 
 void	*g3(void)

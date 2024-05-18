@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:11 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 18:12:52 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/16 01:01:08 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	main(int argc, char *argv[])
 	*scene_location() = parse(argv[1]);
 	if (!is_scene_valid())
 	{
-		printf("Scene is not valid.");
+		printf("Scene is not valid.\n");
 		clean_scene();
 		return (0);
 	}
 	mlx_initialize();
-	// put_scene_data();
+	render();
 	mlx_loop(mlx_data_location()->mlx);
 	clean_scene();
 	return (0);

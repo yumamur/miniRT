@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:56 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/08 16:47:13 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/15 18:27:05 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ _Bool	valid_ato_rgb(char *str, t_vf3 *addr)
 	return (ret);
 }
 
-_Bool	valid_normal_atovf3(char *str, t_vf3 *addr)
+_Bool	valid_normal_ato_vf3(char *str, t_vf3 *addr)
 {
 	_Bool	ret;
 
