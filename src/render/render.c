@@ -10,14 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./t_render.h"
-#include <math.h>
-#include <stdint.h>
-#include "mlx.h"
-#include "libft.h"
-#include "../util/fake_globals.h"
-#include "../objects/objects.h"
-#include "../mlx_utils/mlx_utils.h"
+#include "./render.h"
 
 #include <stdio.h>
 
@@ -58,29 +51,89 @@ int	color_vf_int(t_vf3 clr, int o)
 
 int	pixelshader(t_ray *ray)
 {
+	t_scene *scene = scene_location();	
+	t_list *temp = scene->objects;
+	t_payload payload;
+	t_payload closes_hit_so_far;
+	closes_hit_so_far.hit_distance = FLT_MAX;
+	while (scene->objects != NULL)
+	{
+		t_obj_base *obj = scene->objects->content;
+		if(obj->type == SPHERE)
+			payload = sphere_intercetion(ray, obj);
+		else if(obj->type == PLANE)
+			payload = plane_intercetion(ray, obj);
+		if(payload.hit_distance < closes_hit_so_far.hit_distance)	
+			closes_hit_so_far = payload;
+		scene->objects = scene->objects->next;
+	}
+	scene->objects = temp;
+	if (closes_hit_so_far.hit_distance == FLT_MAX)
+		return (color_vf_int(vf3_clamp((t_vf3){0.0f, 0.0f, 0.0f}, 0.08f, 1.0f), 255));
+	return (color_vf_int(vf3_clamp(closes_hit_so_far.color, 0.08f, 1.0f), 255));
+}
+
+t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj)
+{
 	float	a;
 	float	b;
 	float	c;
-	float	radius = 0.6f;
 	float	discriminant;
+	t_payload payload;
+	t_sphere *sphere;
 
+	sphere = (t_sphere*)obj->obj;
 	a = vf3_dot(ray->direction, ray->direction);
-	b = 2.0f * vf3_dot(ray->origin, ray->direction);
-	c = vf3_dot(ray->origin, ray->origin) - radius * radius;
+	b = 2.0f * vf3_dot(ray->origin - obj->position, ray->direction);
+	c = vf3_dot(ray->origin - obj->position, ray->origin - obj->position) - sphere->radius * sphere->radius;
 	discriminant = b * b - 4.0f * a * c;
 	if (discriminant < 0.0f)
-		return (0xff000000);
+	{
+		payload.hit_distance = FLT_MAX;
+		payload.color = (t_vf3){0.0f, 0.0f, 0.0f};
+		return (payload);
+	}
 	float closes = (-b - sqrt(discriminant)) / (2.0f * a);
+	payload.hit_distance = closes;
+	t_vf3 hit_point = ray->origin - obj->position + ray->direction * closes;
+	t_vf3 normal = vf3_norm(hit_point);
+	t_vf3 light_direction = vf3_norm((t_vf3){1.0f, -1.0f, 1.0f});
+	float d = vf3_dot(-light_direction, normal);
+	if (d < 0.0f)
+		d = 0.0f;
+	payload.color = (obj->color/255) * d;
+	return (payload);
+}
+
+t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj)
+{
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+	t_payload payload;
+	t_sphere *sphere;
+
+	sphere = (t_sphere*)obj->obj;
+	payload.hit_distance = FLT_MAX;
+	a = vf3_dot(ray->direction, ray->direction);
+	b = 2.0f * vf3_dot(ray->origin, ray->direction);
+	c = vf3_dot(ray->origin, ray->origin) - sphere->radius * sphere->radius;
+	discriminant = b * b - 4.0f * a * c;
+	if (discriminant < 0.0f)
+		return (payload);
+	float closes = (-b - sqrt(discriminant)) / (2.0f * a);
+	payload.hit_distance = closes;
 	t_vf3 hit_point = ray->origin + ray->direction * closes;
 	t_vf3 normal = vf3_norm(hit_point);
-	
 	t_vf3 light_direction = vf3_norm((t_vf3){1.0f, -1.0f, 1.0f});
 	float d = vf3_dot(-light_direction, normal);
 	if (d < 0.0f)
 		d = 0.0f;
 	t_vf3 light_color = (t_vf3){1.0f, 1.0f, 1.0f};
 	light_color = light_color * d;
-	return (color_vf_int(vf3_clamp(light_color, 0.08f, 1.0f), 255));
+	payload.color = light_color;
+	return (payload);
 }
 
 // void	rays_init(t_ray *rays)

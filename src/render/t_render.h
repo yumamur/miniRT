@@ -14,11 +14,20 @@
 # define T_RENDER_H
 
 # include "../vector/vector.h"
+# include <stdint.h>
 
 typedef struct s_ray
 {
 	t_vf3	origin;
 	t_vf3	direction;
 }	t_ray;
+
+typedef struct s_payload
+{
+	t_vf3	origin;
+	t_vf3	direction;
+	float hit_distance;
+	t_vf3 color;
+}	t_payload;
 
 #endif
