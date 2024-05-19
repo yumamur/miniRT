@@ -76,7 +76,7 @@ $(NAME): $(LIBFT) $(LIBMLX) $(MAIN) $(SRC)
 	@$(CC) $(CFLAGS) $(DEFINES) $(INCLUDES) -o $(NAME) $(MAIN) $(SRC) $(LIBFT) $(LIB_LNX)
 
 $(LIBMLX):
-	@if [ -z "lib/minilibx" ]; then \
+	@if [ ! -d lib/minilibx ]; then \
 		$(call download_minilibx_linux); \
 	fi
 	@echo "Compiling minilibx..."
