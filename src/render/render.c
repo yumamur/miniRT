@@ -93,12 +93,11 @@ t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj)
 		payload.color = (t_vf3){0.0f, 0.0f, 0.0f};
 		return (payload);
 	}
-	float closes = (-b - sqrt(discriminant)) / (2.0f * a);
-	payload.hit_distance = closes;
-	t_vf3 hit_point = ray->origin - obj->position + ray->direction * closes;
-	t_vf3 normal = vf3_norm(hit_point);
+	payload.hit_distance = (-b - sqrt(discriminant)) / (2.0f * a);
+	payload.origin = ray->origin - obj->position + ray->direction * payload.hit_distance;
+	payload.direction = vf3_norm(payload.origin);
 	t_vf3 light_direction = vf3_norm((t_vf3){1.0f, -1.0f, 1.0f});
-	float d = vf3_dot(-light_direction, normal);
+	float d = vf3_dot(-light_direction, payload.direction);
 	if (d < 0.0f)
 		d = 0.0f;
 	payload.color = (obj->color/255) * d;
@@ -107,32 +106,27 @@ t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj)
 
 t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj)
 {
-	float	a;
-	float	b;
-	float	c;
-	float	discriminant;
 	t_payload payload;
-	t_sphere *sphere;
 
-	sphere = (t_sphere*)obj->obj;
+	float t = 0;
+	if (vf3_dot(obj->rotation , ray->direction) != 0.0)
+	{
+		t = - vf3_dot(ray->origin - obj->position, obj->rotation) / vf3_dot(obj->rotation, ray->direction);
+		if (t > 0.00001)
+		{
+			payload.direction = obj->rotation;
+			payload.origin = t * ray->direction;
+			payload.hit_distance = t;
+			t_vf3 light_direction = vf3_norm((t_vf3){1.0f, 1.0f, 1.0f});
+			float d = vf3_dot(-light_direction, payload.direction);
+			if (d < 0.0f)
+				d = 0.0f;
+			payload.color = (obj->color/255) * d;
+			return (payload);
+		}
+	}
 	payload.hit_distance = FLT_MAX;
-	a = vf3_dot(ray->direction, ray->direction);
-	b = 2.0f * vf3_dot(ray->origin, ray->direction);
-	c = vf3_dot(ray->origin, ray->origin) - sphere->radius * sphere->radius;
-	discriminant = b * b - 4.0f * a * c;
-	if (discriminant < 0.0f)
-		return (payload);
-	float closes = (-b - sqrt(discriminant)) / (2.0f * a);
-	payload.hit_distance = closes;
-	t_vf3 hit_point = ray->origin + ray->direction * closes;
-	t_vf3 normal = vf3_norm(hit_point);
-	t_vf3 light_direction = vf3_norm((t_vf3){1.0f, -1.0f, 1.0f});
-	float d = vf3_dot(-light_direction, normal);
-	if (d < 0.0f)
-		d = 0.0f;
-	t_vf3 light_color = (t_vf3){1.0f, 1.0f, 1.0f};
-	light_color = light_color * d;
-	payload.color = light_color;
+	payload.color = (t_vf3){0.0f, 0.0f, 0.0f};
 	return (payload);
 }
 
