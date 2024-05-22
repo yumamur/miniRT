@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:27 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/15 22:35:29 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:22:48 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_sphere
 typedef struct s_cylinder
 {
 	t_obj_base	base;
+	t_vf3		top;
+	t_vf3		bottom;
 	float		height;
 	float		radius;
 }	t_cylinder;
