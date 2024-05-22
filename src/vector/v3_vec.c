@@ -6,12 +6,12 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:04:02 by yumamur           #+#    #+#             */
-/*   Updated: 2024/03/28 21:04:03 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/18 20:44:09 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "vector.h"
 #include <math.h>
-#include "./t_vector.h"
 
 extern float	vf3_dot(t_vf3 a, t_vf3 b);
 
@@ -21,9 +21,7 @@ t_vf3	vf3_norm(t_vf3 v)
 
 	sq = vf3_dot(v, v);
 	if (fabs(sq) < 1e-12)
-	{
 		return (v);
-	}
 	return (v * (1.0 / sqrt(sq)));
 }
 

@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 04:24:05 by mugurel           #+#    #+#             */
-/*   Updated: 2024/05/16 07:36:15 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/19 22:28:29 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define WIDTH 900
 # define HEIGHT 600
+# define XK_MISCELLANY true
 
 # include <stdint.h>
 

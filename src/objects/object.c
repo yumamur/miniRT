@@ -6,11 +6,12 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:34:39 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/08 15:08:08 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:26:55 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "objects.h"
+#include "../vector/vector.h"
 #include "libft.h"
 
 t_obj_base	*new_sphere(float radius, t_obj_base base)
@@ -34,6 +35,7 @@ t_obj_base	*new_plane(t_obj_base base)
 	plane = ft_calloc(sizeof(t_plane), 1);
 	if (!plane)
 		return (NULL);
+	plane->rotation = vf3_norm(base.rotation);
 	*plane = *(t_plane *)&base;
 	plane->type = PLANE;
 	plane->obj = plane;
@@ -47,6 +49,7 @@ t_obj_base	*new_triangle(t_vf3 v0, t_vf3 v1, t_vf3 v2, t_obj_base base)
 	triangle = ft_calloc(sizeof(t_triangle), 1);
 	if (!triangle)
 		return (NULL);
+	base.rotation = vf3_cross(vf3_sub(v1, v0), vf3_sub(v2, v0));
 	triangle->v0 = v0;
 	triangle->v1 = v1;
 	triangle->v2 = v2;
@@ -63,9 +66,12 @@ t_obj_base	*new_cylinder(float radius, float height, t_obj_base base)
 	cylinder = ft_calloc(sizeof(t_cylinder), 1);
 	if (!cylinder)
 		return (NULL);
+	base.rotation = vf3_norm(base.rotation);
 	cylinder->radius = radius;
 	cylinder->height = height;
 	cylinder->base = base;
+	cylinder->top = base.position + base.rotation * (height) / 2;
+	cylinder->bottom = base.position - base.rotation * (height) / 2;
 	cylinder->base.type = CYLINDER;
 	cylinder->base.obj = cylinder;
 	return (&cylinder->base);

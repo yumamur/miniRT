@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:11 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/19 22:23:01 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:28:32 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[])
 		return (0);
 	}
 	mlx_initialize();
-	mlx_expose_hook(mlx_data_location()->win, render, NULL);
+	// render();
 	mlx_loop(mlx_data_location()->mlx);
 	clean_scene();
 	return (0);
