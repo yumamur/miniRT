@@ -28,5 +28,6 @@
 int	render(void);
 t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj);
 t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj);
+t_payload	trace_ray(t_ray *ray);
 
 #endif
