@@ -49,7 +49,7 @@ t_obj_base	*new_triangle(t_vf3 v0, t_vf3 v1, t_vf3 v2, t_obj_base base)
 	triangle = ft_calloc(sizeof(t_triangle), 1);
 	if (!triangle)
 		return (NULL);
-	base.rotation = vf3_cross(vf3_sub(v1, v0), vf3_sub(v2, v0));
+	base.rotation = vf3_cross(v1 - v0, v2 - v0);
 	triangle->v0 = v0;
 	triangle->v1 = v1;
 	triangle->v2 = v2;
