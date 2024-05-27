@@ -13,8 +13,8 @@
 #ifndef MLX_UTILS_H
 # define MLX_UTILS_H
 
-# define WIDTH 900
-# define HEIGHT 600
+# define WIDTH 1920
+# define HEIGHT 1080
 # define XK_MISCELLANY true
 
 # include <stdint.h>
