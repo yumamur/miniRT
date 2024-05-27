@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:31 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/03 00:55:43 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:21:54 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ _Bool	is_object(char *str)
 	key = get_key(str);
 	return (key == get_key(SPHERE_STR)
 		|| key == get_key(PLANE_STR)
-		|| key == get_key(TRIANGLE_STR)
 		|| key == get_key(CYLINDER_STR)
 		|| key == get_key(CONE_STR));
 }

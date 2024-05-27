@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:56 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/15 18:27:05 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/26 23:24:18 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ _Bool	in_range_f(float f, float min, float max);
 
 _Bool	valid_atof(char *str, float *addr)
 {
-	if (!str || !is_float(str))
+	if (!str || (!is_float(str) && !is_int(str)))
 		return (0);
 	*addr = ft_atof(str);
 	return (1);
@@ -40,10 +40,12 @@ _Bool	valid_ato_vf3(char *str, t_vf3 *addr)
 {
 	char	**tab;
 
+	if (ft_strchr(ft_strchr(ft_strchr(str, ',') + 1, ',') + 1, ',') != NULL)
+		return (0);
 	tab = ft_split(str, ',');
-	if (!tab && !tab[0] && !(is_float(tab[0]) || is_int(tab[0]))
-		&& !tab[1] && !(is_float(tab[1]) || is_int(tab[1]))
-		&& !tab[2] && !(is_float(tab[2]) || is_int(tab[2])))
+	if (!tab || !tab[0] || (!is_float(tab[0]) && !is_int(tab[0]))
+		|| !tab[1] || (!is_float(tab[1]) && !is_int(tab[1]))
+		|| !tab[2] || (!is_float(tab[2]) && !is_int(tab[2])))
 		return (0);
 	*addr = (t_vf3){ft_atof(tab[0]), ft_atof(tab[1]), ft_atof(tab[2])};
 	arr_free(tab);
