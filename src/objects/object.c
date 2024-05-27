@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:34:39 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/22 18:26:55 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:21:50 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,6 @@ t_obj_base	*new_plane(t_obj_base base)
 	plane->type = PLANE;
 	plane->obj = plane;
 	return (plane);
-}
-
-t_obj_base	*new_triangle(t_vf3 v0, t_vf3 v1, t_vf3 v2, t_obj_base base)
-{
-	t_triangle	*triangle;
-
-	triangle = ft_calloc(sizeof(t_triangle), 1);
-	if (!triangle)
-		return (NULL);
-	base.rotation = vf3_cross(v1 - v0, v2 - v0);
-	triangle->v0 = v0;
-	triangle->v1 = v1;
-	triangle->v2 = v2;
-	triangle->base = base;
-	triangle->base.type = TRIANGLE;
-	triangle->base.obj = triangle;
-	return (&triangle->base);
 }
 
 t_obj_base	*new_cylinder(float radius, float height, t_obj_base base)

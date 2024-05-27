@@ -6,11 +6,11 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:54 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/09 18:42:11 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/26 23:47:51 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../lib/libft/libft.h"
 #include "../objects/objects.h"
 #include "../util/util.h"
 #include "./parse_util.h"
@@ -49,23 +49,6 @@ t_obj_base	*parse_plane(char **tab)
 	return (NULL);
 }
 
-t_obj_base	*parse_triangle(char **tab)
-{
-	t_obj_base	base;
-	t_vf3		v[3];
-
-	if (!tab || arr_len(tab) != 7)
-		return (NULL);
-	base = (t_obj_base){0};
-	if (valid_ato_vf3(tab[1], &(v[0]))
-		&& valid_ato_vf3(tab[2], &(v[1]))
-		&& valid_ato_vf3(tab[3], &(v[2]))
-		&& valid_ato_rgb(tab[4], &base.color)
-		&& valid_normal_atof(tab[5], &base.reflectivity))
-		return (new_triangle(v[0], v[1], v[2], base));
-	return (NULL);
-}
-
 t_obj_base	*parse_cylinder(char **tab, enum e_obj_type type)
 {
 	t_obj_base	base;
@@ -95,8 +78,6 @@ void	*parse_obj(char **tab)
 		return (parse_sphere(tab));
 	else if (get_key(tab[0]) == get_key(PLANE_STR))
 		return (parse_plane(tab));
-	else if (get_key(tab[0]) == get_key(TRIANGLE_STR))
-		return (parse_triangle(tab));
 	else if (get_key(tab[0]) == get_key(CYLINDER_STR))
 		return (parse_cylinder(tab, CYLINDER));
 	else if (get_key(tab[0]) == get_key(CONE_STR))

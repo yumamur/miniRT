@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:27 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/22 18:22:48 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:21:53 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 enum e_obj_type
 {
 	PLANE,
-	TRIANGLE,
 	SPHERE,
 	CYLINDER,
 	CONE,
@@ -36,14 +35,6 @@ typedef struct s_obj_base
 }	t_obj_base;
 
 typedef t_obj_base	t_plane;
-
-typedef struct s_triangle
-{
-	t_obj_base	base;
-	t_vf3		v0;
-	t_vf3		v1;
-	t_vf3		v2;
-}	t_triangle;
 
 typedef struct s_sphere
 {

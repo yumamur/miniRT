@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:15 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/10 16:14:51 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:45:47 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ t_scene	parse(char *filename)
 		if (!line)
 			break ;
 		if (ft_strlen(line) >= 10)
-		{
-			line[ft_strlen(line) - 1] = '\0';
 			parse_line_into_scene(line, &scene);
-		}
 		free(line);
 	}
 	close(fd);

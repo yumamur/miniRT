@@ -29,9 +29,39 @@ int	color_vf_int(t_vf3 clr, int o)
 	return (o << 24 | r << 16 | g << 8 | b);
 }
 
-
-
 int	pixelshader(t_ray *ray)
+{
+	t_payload payload;
+	t_vf3 color;
+	int	bounces;
+	double	m;
+
+	m = 1;
+	bounces = 0;
+	color = (t_vf3){0.0f,0.0f,0.0f};
+	while (bounces < 5)
+	{
+		payload = trace_ray(ray);
+		if (payload.hit_distance == FLT_MAX)
+		{
+			color += (t_vf3){0.0f,0.0f,0.0f} * 0.7;
+			break;
+		}
+		ray->direction = payload.direction;
+		ray->origin = payload.origin + (ray->direction * 0.0003f);
+		t_vf3 light_direction = vf3_norm((t_vf3){1.0f, 1.0f, 1.0f});
+		double d = vf3_dot(-light_direction, payload.direction);
+		if (d < 0.0f)
+			d = 0.0f;
+		payload.color *= d;
+		color += payload.color * m;
+		m *= 0.7;
+		bounces++;
+	}
+	return (color_vf_int(vf3_clamp(color, 0.08f, 1.0f), 255));
+}
+
+t_payload	trace_ray(t_ray *ray)
 {
 	t_payload payload;
 	t_vf3 color;
@@ -139,7 +169,6 @@ t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj)
 	return (payload);
 }
 
-
 void rays_init(t_ray *rays)
 {
 	int		x;
@@ -154,7 +183,6 @@ void rays_init(t_ray *rays)
         while (++x < WIDTH)
         {
             offset = 0.01f * mock_rand_range(-0.5, 0.5);
-
             d.x = (((double)x + offset) / WIDTH - 0.5f) * (double)WIDTH / HEIGHT;
             d.y = (((double)y + offset) / HEIGHT - 0.5f);
             
@@ -190,7 +218,7 @@ int	render(void)
 
 	rays = rays_location();
 	j = 0;
-	while (++j <= 100)
+	while (++j <= 10)
 	{
 		rays_init(rays);
 		y = -1;
@@ -209,3 +237,4 @@ int	render(void)
 	put_current_img();
 	return (0);
 }
+
