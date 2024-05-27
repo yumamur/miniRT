@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:03:08 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/10 16:14:05 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/22 23:21:45 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # define SPHERE_STR			"sp"
 # define PLANE_STR			"pl"
 # define CYLINDER_STR		"cy"
-# define TRIANGLE_STR		"tr"
 # define CONE_STR			"cn"
 
 int	get_key(char *key);
