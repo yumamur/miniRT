@@ -34,6 +34,6 @@ t_obj_base		*new_cone(float radius, float height, t_obj_base base);
 
 t_camera		*get_camera(int i);
 t_light_base	*get_directional_light();
-t_ambient_light	*get_ambient_light(void);
+t_light_base	*get_ambient_light(void);
 
 #endif
