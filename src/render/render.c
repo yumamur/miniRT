@@ -16,6 +16,7 @@
 #include <time.h>   // For time()
 #include <stdio.h>
 #include "../util/util.h"
+#include "../objects/objects.h"
 
 int	color_vf_int(t_vf3 clr, int o)
 {
@@ -29,51 +30,19 @@ int	color_vf_int(t_vf3 clr, int o)
 	return (o << 24 | r << 16 | g << 8 | b);
 }
 
+
 int	pixelshader(t_ray *ray)
 {
 	t_payload payload;
+	t_payload payload2;
 	t_vf3 color;
-	int	bounces;
-	double	m;
-
-	m = 1;
-	bounces = 0;
-	color = (t_vf3){0.0f,0.0f,0.0f};
-	while (bounces < 5)
-	{
-		payload = trace_ray(ray);
-		if (payload.hit_distance == FLT_MAX)
-		{
-			color += (t_vf3){0.0f,0.0f,0.0f} * 0.7;
-			break;
-		}
-		ray->direction = payload.direction;
-		ray->origin = payload.origin + (ray->direction * 0.0003f);
-		t_vf3 light_direction = vf3_norm((t_vf3){1.0f, 1.0f, 1.0f});
-		double d = vf3_dot(-light_direction, payload.direction);
-		if (d < 0.0f)
-			d = 0.0f;
-		payload.color *= d;
-		color += payload.color * m;
-		m *= 0.7;
-		bounces++;
-	}
-	return (color_vf_int(vf3_clamp(color, 0.08f, 1.0f), 255));
-}
-
-t_payload	trace_ray(t_ray *ray)
-{
-	t_payload payload;
-	t_vf3 color;
-	int	bounces;
-	double	m;
+	int bounces;
 	t_light_base *light = scene_location()->lights->content;
 	t_ambient_light *ambient = light->light; 
 
-	m = 1;
 	bounces = 0;
 	color = (t_vf3){0.0f,0.0f,0.0f};
-	while (bounces < 10)
+	while (bounces < 3)
 	{
 		payload = trace_ray(ray);
 		if (payload.hit_distance == FLT_MAX)
@@ -81,16 +50,17 @@ t_payload	trace_ray(t_ray *ray)
 			color += light->color/255 * ambient->ratio;
 			break;
 		}
-		t_vf3 light_direction = vf3_norm((t_vf3){0.0f, 1.0f, 0.0f});
-		double d = vf3_dot(payload.direction, -light_direction);
-		if (d < 0.0f)
-			d = 0.0f;
-		payload.color *= d;
-		color += payload.color * m;
-		m *= 0.5;
+		t_ray ray2 = *ray;
 		ray->origin = payload.origin + payload.direction * 0.0001f;
-		ray->direction = vf3_reflect(ray->direction, payload.direction + 0.0f \
-				* (t_vf3){(float)mock_rand_range(-.5,.5), (float)mock_rand_range(-.5,.5),  (float)mock_rand_range(-.5,.5)});
+		ray->direction = vf3_norm(((t_point_light*)get_directional_light()->light)->position - payload.origin);
+		payload2 = trace_ray(ray);
+		if (payload2.hit_distance == FLT_MAX)
+		{
+			color += payload.color * vf3_dot(payload.direction, ray->direction);
+			break;
+		}
+		ray->origin = payload.origin + payload.direction * 0.0001f;
+		ray->direction = vf3_reflect(ray2.direction, payload.origin);
 		bounces++;
 	}
 	return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
@@ -189,7 +159,7 @@ void rays_init(t_ray *rays)
             rays[x + y * WIDTH] = (t_ray){
                 .origin = get_camera(0)->position +
 					(t_vf3){offset, offset, 0.0f},
-                .direction = (t_vf3){d.x * (get_camera(0)->fov/90), d.y * (get_camera(0)->fov/90), 1.0f}};
+                .direction = (t_vf3){d.x * (get_camera(0)->fov/90), -d.y * (get_camera(0)->fov/90), 1.0f}};
         }
     }
 }
