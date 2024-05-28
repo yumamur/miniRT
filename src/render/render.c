@@ -26,7 +26,6 @@ int	pixelshader(t_ray *ray)
 
 	light = scene_location()->lights->content;
 	ambient = light->light;
-	intensity = 1.0f;
 	color = (t_vf3){0.0f,0.0f,0.0f};
 	payload = trace_ray(ray);
 	if (payload.hit_distance == FLT_MAX)
