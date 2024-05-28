@@ -44,7 +44,7 @@ int	pixelshader(t_ray *ray)
 	bounces = 0;
 	intensity = 1.0f;
 	color = (t_vf3){0.0f,0.0f,0.0f};
-	while (bounces < 9)
+	while (bounces < 1)
 	{
 		payload = trace_ray(ray);
 		if (payload.hit_distance == FLT_MAX)
@@ -83,7 +83,13 @@ t_payload	trace_ray(t_ray *ray)
 		if(obj->type == SPHERE)
 			payload = sphere_intercetion(ray, obj);
 		else if(obj->type == PLANE)
+		{
+			if(vf3_dot(obj->rotation, ray->direction) > 0.0f)
+			{
+				obj->rotation = -obj->rotation;
+			}
 			payload = plane_intercetion(ray, obj);
+		}
 		else if(obj->type == CYLINDER)
 			payload = plane_intercetion(ray, obj);
 		if(payload.hit_distance > 0 && payload.hit_distance < closes_hit_so_far.hit_distance)	
@@ -115,10 +121,20 @@ t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj)
 		return (payload);
 	}
 	payload.hit_distance = (-b - sqrt(discriminant)) / (2.0f * a);
-	payload.origin = (ray->origin - obj->position) + ray->direction * payload.hit_distance;
-	payload.direction = vf3_norm(payload.origin);
-	payload.origin += obj->position;
+	if (payload.hit_distance < 0.0f)
+	{
+		payload.hit_distance = (-b + sqrt(discriminant)) / (2.0f * a);
+		payload.origin = (ray->origin - obj->position) + ray->direction * payload.hit_distance;
+		payload.direction = -vf3_norm(payload.origin);
+		payload.origin += obj->position;
+	}
+	else
+	{
+		payload.origin = ray->origin + ray->direction * payload.hit_distance;
+		payload.direction = vf3_norm(payload.origin - obj->position);
+	}
 	payload.color = obj->color/255;
+	payload.type = obj->type;
 	return (payload);
 }
 
@@ -134,6 +150,7 @@ t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj)
 			payload.direction = obj->rotation;
 			payload.origin = ray->origin + ray->direction * payload.hit_distance;
 			payload.color = obj->color/255;
+			payload.type = obj->type;
 			return (payload);
 		}
 	}
@@ -162,7 +179,7 @@ void rays_init(t_ray *rays)
             rays[x + y * WIDTH] = (t_ray){
                 .origin = get_camera(0)->position +
 					(t_vf3){offset, offset, 0.0f},
-                .direction = (t_vf3){d.x * (get_camera(0)->fov/90), -d.y * (get_camera(0)->fov/90), 1.0f}};
+                .direction = (t_vf3){(d.x + get_camera(0)->look_at.x) * (get_camera(0)->fov/90), (-d.y + get_camera(0)->look_at.y) * (get_camera(0)->fov/90), get_camera(0)->look_at.z}};
         }
     }
 }

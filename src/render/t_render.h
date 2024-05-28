@@ -15,6 +15,7 @@
 
 # include "../vector/vector.h"
 # include <stdint.h>
+# include "../objects/objects.h"
 
 typedef struct s_ray
 {
@@ -28,6 +29,7 @@ typedef struct s_payload
 	t_vf3	direction;
 	float hit_distance;
 	t_vf3 color;
+	enum e_obj_type type;
 }	t_payload;
 
 #endif
