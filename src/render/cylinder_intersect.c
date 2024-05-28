@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 08:13:23 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/28 13:48:42 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 20:27:29 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	calc_hit(t_ray *ray, t_cylinder *cy, double t, t_payload *payload)
 	{
 		payload->hit_distance = t;
 		payload->origin = hit_point;
-		payload->direction = vf3_norm(hit_point);
+		payload->direction = vf3_norm(hit_point - cy->bottom);
 		payload->color = cy->base.color * 1.0 / 255.0;
 	}
 }

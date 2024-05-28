@@ -6,12 +6,13 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:23:58 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/16 06:52:33 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 20:55:13 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "objects.h"
 #include "libft.h"
+#include "../vector/vector.h"
 #include "../util/fake_globals.h"
 
 t_camera	*new_camera(t_vf3 position, t_vf3 look_at, float fov)
@@ -22,7 +23,7 @@ t_camera	*new_camera(t_vf3 position, t_vf3 look_at, float fov)
 	if (!cam)
 		return (NULL);
 	cam->position = position;
-	cam->look_at = look_at;
+	cam->look_at = vf3_norm(look_at);
 	cam->fov = fov;
 	return (cam);
 }
