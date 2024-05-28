@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:22:47 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/27 18:53:41 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 08:27:53 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_obj_base		*new_cylinder(float radius, float height, t_obj_base base);
 t_obj_base		*new_cone(float radius, float height, t_obj_base base);
 
 t_camera		*get_camera(int i);
-t_light_base	*get_directional_light();
+t_light_base	*get_directional_light(void);
 t_light_base	*get_ambient_light(void);
 
 #endif
