@@ -6,17 +6,15 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/05/16 15:13:47 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 07:51:02 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
 #include "t_render.h"
-#include <stdlib.h> // For rand() and srand()
-#include <time.h>   // For time()
-#include <stdio.h>
 #include "../util/util.h"
 #include "../objects/objects.h"
+
 
 int	color_vf_int(t_vf3 clr, int o)
 {
@@ -30,42 +28,35 @@ int	color_vf_int(t_vf3 clr, int o)
 	return (o << 24 | r << 16 | g << 8 | b);
 }
 
-
 int	pixelshader(t_ray *ray)
 {
 	t_payload payload;
 	t_payload payload2;
 	t_vf3 color;
 	double intensity;
-	int bounces;
 	t_light_base *light = scene_location()->lights->content;
-	t_ambient_light *ambient = light->light; 
+	t_ambient_light *ambient = light->light;
 
-	bounces = 0;
 	intensity = 1.0f;
 	color = (t_vf3){0.0f,0.0f,0.0f};
-	while (bounces < 1)
+	payload = trace_ray(ray);
+	if (payload.hit_distance == FLT_MAX)
 	{
-		payload = trace_ray(ray);
-		if (payload.hit_distance == FLT_MAX)
-		{
-			color += light->color/255 * ambient->ratio;
-			break;
-		}
-		t_ray ray2 = *ray;
-		ray->origin = payload.origin + payload.direction * 0.0001f;
-		ray->direction = vf3_norm(((t_point_light*)get_directional_light()->light)->position - payload.origin);
-		payload2 = trace_ray(ray);
-		if (payload2.hit_distance == FLT_MAX || payload2.hit_distance > vf3_len(((t_point_light*)get_directional_light()->light)->position - payload.origin))
-		{
-			double d = vf3_dot(payload.direction, ray->direction);
-			color += payload.color * intensity * d;
-			break;
-		}
-		ray->origin = payload.origin + payload.direction * 0.0001f;
-		ray->direction = vf3_reflect(ray2.direction, payload.direction);
-		bounces++;
+		color += light->color/255 * ambient->ratio;
+		return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
 	}
+	t_ray ray2 = *ray;
+	ray->origin = payload.origin + payload.direction * 0.0001f;
+	ray->direction = vf3_norm(((t_point_light*)get_directional_light()->light)->position - payload.origin);
+	payload2 = trace_ray(ray);
+	if (payload2.hit_distance == FLT_MAX || payload2.hit_distance > vf3_len(((t_point_light*)get_directional_light()->light)->position - payload.origin))
+	{
+		double d = vf3_dot(payload.direction, ray->direction);
+		color += payload.color * intensity * d;
+		return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
+	}
+	ray->origin = payload.origin + payload.direction * 0.0001f;
+	ray->direction = vf3_reflect(ray2.direction, payload.direction);
 	return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
 }
 
@@ -91,7 +82,7 @@ t_payload	trace_ray(t_ray *ray)
 			payload = plane_intercetion(ray, obj);
 		}
 		else if(obj->type == CYLINDER)
-			payload = plane_intercetion(ray, obj);
+			payload = cylinder_intersection(ray, obj);
 		if(payload.hit_distance > 0 && payload.hit_distance < closes_hit_so_far.hit_distance)	
 			closes_hit_so_far = payload;
 		scene->objects = scene->objects->next;
@@ -164,7 +155,7 @@ void rays_init(t_ray *rays)
 	int		x;
 	int		y;
 	t_vf2	d;
-	double	offset;
+	double	off;
 	
 	y = -1;
     while (++y < HEIGHT)
@@ -172,14 +163,17 @@ void rays_init(t_ray *rays)
 		x = -1;
         while (++x < WIDTH)
         {
-            offset = 0.01f * mock_rand_range(-0.5, 0.5);
-            d.x = (((double)x + offset) / WIDTH - 0.5f) * (double)WIDTH / HEIGHT;
-            d.y = (((double)y + offset) / HEIGHT - 0.5f);
+            off = 0.01f * mock_rand_range(-0.5, 0.5);
+            d.x = (((double)x + off) / WIDTH - 0.5f) * (double)WIDTH / HEIGHT;
+            d.y = (((double)y + off) / HEIGHT - 0.5f);
             
             rays[x + y * WIDTH] = (t_ray){
                 .origin = get_camera(0)->position +
-					(t_vf3){offset, offset, 0.0f},
-                .direction = (t_vf3){(d.x + get_camera(0)->look_at.x) * (get_camera(0)->fov/90), (-d.y + get_camera(0)->look_at.y) * (get_camera(0)->fov/90), get_camera(0)->look_at.z}};
+					(t_vf3){off, off, 0.0f},
+                .direction = (t_vf3){
+					(d.x + get_camera(0)->look_at.x) * (get_camera(0)->fov/90),
+					(-d.y + get_camera(0)->look_at.y) * (get_camera(0)->fov/90),
+					get_camera(0)->look_at.z}};
         }
     }
 }
@@ -227,4 +221,3 @@ int	render(void)
 	put_current_img();
 	return (0);
 }
-

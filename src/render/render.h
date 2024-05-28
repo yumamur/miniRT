@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:23:03 by mugurel           #+#    #+#             */
-/*   Updated: 2024/04/11 11:54:37 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 07:51:47 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,10 @@
 # include "../util/fake_globals.h"
 # include "../objects/objects.h"
 
-int	render(void);
+int			render(void);
 t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj);
 t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj);
+t_payload	cylinder_intersection(t_ray *ray, t_obj_base *obj);
 t_payload	trace_ray(t_ray *ray);
 
 #endif

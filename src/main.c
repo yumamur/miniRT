@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:11 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/20 21:28:32 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 08:31:01 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 
 #include <stdio.h>
 
-void	mock_render(t_scene *scene, t_mlx_data *mlx_data)
-{
-	(void)scene;
-	(void)mlx_data;
-}
 
 int	main(int argc, char *argv[])
 {
@@ -37,7 +32,6 @@ int	main(int argc, char *argv[])
 		return (0);
 	}
 	mlx_initialize();
-	// render();
 	mlx_loop(mlx_data_location()->mlx);
 	clean_scene();
 	return (0);
