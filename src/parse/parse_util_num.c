@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:56 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/26 23:24:18 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 04:07:57 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,13 @@ _Bool	valid_normal_atof(char *str, float *addr)
 _Bool	valid_ato_vf3(char *str, t_vf3 *addr)
 {
 	char	**tab;
+	char	*pt;
 
-	if (ft_strchr(ft_strchr(ft_strchr(str, ',') + 1, ',') + 1, ',') != NULL)
+	pt = ft_strchr(str, ',');
+	if (!pt || !ft_strchr(pt + 1, ','))
+		return (0);
+	pt = ft_strchr(pt + 1, ',');
+	if (ft_strchr(pt + 1, ','))
 		return (0);
 	tab = ft_split(str, ',');
 	if (!tab || !tab[0] || (!is_float(tab[0]) && !is_int(tab[0]))
