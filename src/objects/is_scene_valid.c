@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 23:22:35 by yumamur           #+#    #+#             */
-/*   Updated: 2024/04/11 11:52:52 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 06:56:33 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,43 @@
 static _Bool	is_cameras_valid(t_list *cameras)
 {
 	t_list	*current;
+	int		c;
 
+	c = 0;
 	current = cameras;
 	while (current)
 	{
 		if (!current->content)
 			return (0);
+		c++;
 		current = current->next;
 	}
+	if (c != 1)
+		return (0);
 	return (1);
 }
 
 static _Bool	is_lights_valid(t_list *lights)
 {
 	t_list	*current;
+	int		a;
+	int		p;
 
+	a = 0;
+	p = 0;
 	current = lights;
 	while (current)
 	{
 		if (!current->content)
 			return (0);
+		if (((t_light_base *)current->content)->type == AMBIENT_LIGHT)
+			a++;
+		else if (((t_light_base *)current->content)->type == POINT_LIGHT)
+			p++;
 		current = current->next;
 	}
+	if (a != 1 || p != 1)
+		return (0);
 	return (1);
 }
 
