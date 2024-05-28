@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/05/28 07:51:02 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 17:24:59 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,12 @@
 #include "../util/util.h"
 #include "../objects/objects.h"
 
-
-int	color_vf_int(t_vf3 clr, int o)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	r = (int)(clr.r * 255.0f);
-	g = (int)(clr.g * 255.0f);
-	b = (int)(clr.b * 255.0f);
-	return (o << 24 | r << 16 | g << 8 | b);
-}
-
 int	pixelshader(t_ray *ray)
 {
-	t_payload payload;
-	t_payload payload2;
-	t_vf3 color;
-	double intensity;
+	t_payload	payload;
+	t_payload	payload2;
+	t_vf3		color;
+	double		intensity;
 	t_light_base *light = scene_location()->lights->content;
 	t_ambient_light *ambient = light->light;
 
@@ -64,133 +51,57 @@ t_payload	trace_ray(t_ray *ray)
 {
 	t_scene *scene = scene_location();	
 	t_list *temp = scene->objects;
-	t_payload payload;
-	t_payload closes_hit_so_far;
+	t_payload load;
+	t_payload close;
 
-	closes_hit_so_far.hit_distance = FLT_MAX;
+	close.hit_distance = FLT_MAX;
 	while (scene->objects != NULL)
 	{
 		t_obj_base *obj = scene->objects->content;
 		if(obj->type == SPHERE)
-			payload = sphere_intercetion(ray, obj);
+			load = sphere_intercetion(ray, obj);
 		else if(obj->type == PLANE)
 		{
 			if(vf3_dot(obj->rotation, ray->direction) > 0.0f)
-			{
-				obj->rotation = -obj->rotation;
-			}
-			payload = plane_intercetion(ray, obj);
+				obj->rotation *= -1;
+			load = plane_intercetion(ray, obj);
 		}
 		else if(obj->type == CYLINDER)
-			payload = cylinder_intersection(ray, obj);
-		if(payload.hit_distance > 0 && payload.hit_distance < closes_hit_so_far.hit_distance)	
-			closes_hit_so_far = payload;
+			load = cylinder_intersection(ray, obj);
+		if(loadd.hit_distance > 0 && load.hit_distance < close.hit_distance)	
+			close = load;
 		scene->objects = scene->objects->next;
 	}
 	scene->objects = temp;
-	return (closes_hit_so_far);
+	return (close);
 }
 
-t_payload	sphere_intercetion(t_ray *ray, t_obj_base *obj)
+void	rays_init(t_ray *rays)
 {
-	double	a;
-	double	b;
-	double	c;
-	double	discriminant;
-	t_payload payload;
-	t_sphere *sphere;
+	int			x;
+	int			y;
+	t_vf2		d;
+	double		off;
+	t_camera	*cam;
 
-	sphere = (t_sphere*)obj->obj;
-	a = vf3_dot(ray->direction, ray->direction);
-	b = 2.0f * vf3_dot(ray->origin - obj->position, ray->direction);
-	c = vf3_dot(ray->origin - obj->position, ray->origin - obj->position) - sphere->radius * sphere->radius;
-	discriminant = b * b - 4.0f * a * c;
-	if (discriminant < 0.0f)
+	y = -1;
+	cam = get_camera(0);
+	while (++y < HEIGHT)
 	{
-		payload.hit_distance = FLT_MAX;
-		payload.color = (t_vf3){0.0f, 0.0f, 0.0f};
-		return (payload);
-	}
-	payload.hit_distance = (-b - sqrt(discriminant)) / (2.0f * a);
-	if (payload.hit_distance < 0.0f)
-	{
-		payload.hit_distance = (-b + sqrt(discriminant)) / (2.0f * a);
-		payload.origin = (ray->origin - obj->position) + ray->direction * payload.hit_distance;
-		payload.direction = -vf3_norm(payload.origin);
-		payload.origin += obj->position;
-	}
-	else
-	{
-		payload.origin = ray->origin + ray->direction * payload.hit_distance;
-		payload.direction = vf3_norm(payload.origin - obj->position);
-	}
-	payload.color = obj->color/255;
-	payload.type = obj->type;
-	return (payload);
-}
-
-t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj)
-{
-	t_payload payload;
-
-	if (vf3_dot(obj->rotation , ray->direction) != 0.0)
-	{
-		payload.hit_distance = -vf3_dot(ray->origin - obj->position, obj->rotation) / vf3_dot(obj->rotation, ray->direction);
-		if (payload.hit_distance > 0.0)
+		x = -1;
+		while (++x < WIDTH)
 		{
-			payload.direction = obj->rotation;
-			payload.origin = ray->origin + ray->direction * payload.hit_distance;
-			payload.color = obj->color/255;
-			payload.type = obj->type;
-			return (payload);
+			off = 0.01f * mock_rand_range(-0.5, 0.5);
+			d.x = (((double)x + off) / WIDTH - 0.5f) * (double)WIDTH / HEIGHT;
+			d.y = (((double)y + off) / HEIGHT - 0.5f);
+			rays[x + y * WIDTH] = (t_ray){
+				.origin = cam->position + (t_vf3){off, off, 0.0f},
+				.direction = (t_vf3){
+				(d.x + cam->look_at.x) * (cam->fov / 90),
+				(-d.y + cam->look_at.y) * (cam->fov / 90),
+				cam->look_at.z}};
 		}
 	}
-	payload.hit_distance = FLT_MAX;
-	payload.color = (t_vf3){0.0f, 0.0f, 0.0f};
-	return (payload);
-}
-
-void rays_init(t_ray *rays)
-{
-	int		x;
-	int		y;
-	t_vf2	d;
-	double	off;
-	
-	y = -1;
-    while (++y < HEIGHT)
-    {
-		x = -1;
-        while (++x < WIDTH)
-        {
-            off = 0.01f * mock_rand_range(-0.5, 0.5);
-            d.x = (((double)x + off) / WIDTH - 0.5f) * (double)WIDTH / HEIGHT;
-            d.y = (((double)y + off) / HEIGHT - 0.5f);
-            
-            rays[x + y * WIDTH] = (t_ray){
-                .origin = get_camera(0)->position +
-					(t_vf3){off, off, 0.0f},
-                .direction = (t_vf3){
-					(d.x + get_camera(0)->look_at.x) * (get_camera(0)->fov/90),
-					(-d.y + get_camera(0)->look_at.y) * (get_camera(0)->fov/90),
-					get_camera(0)->look_at.z}};
-        }
-    }
-}
-
-int	calc_color(int prev_color, int new_color, int j)
-{
-	int	r;
-	int	g;
-	int	b;
-	int	o;
-
-	o = (prev_color >> 24) & 0xff;
-	r = (((prev_color >> 16) & 0xff) * j + ((new_color >> 16) & 0xff))
-		/ (j + 1);
-	g = (((prev_color >> 8) & 0xff) * j + ((new_color >> 8) & 0xff)) / (j + 1);
-	b = ((prev_color & 0xff) * j + (new_color & 0xff)) / (j + 1);
-	return (o << 24 | r << 16 | g << 8 | b);
 }
 
 int	render(void)

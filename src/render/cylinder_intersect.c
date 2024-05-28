@@ -6,76 +6,16 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 08:13:23 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/28 08:34:36 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 13:48:42 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./render.h"
-#include <stdbool.h>
 
-bool	intersect_ray_plane(t_ray *ray, t_vf3 point, t_vf3 normal, double *t)
-{
-	double	denom;
-	t_vf3	p0l0;
+void	calc_top_hit(t_ray *ray, t_cylinder *cy, t_payload *payload);
+void	calc_bottom_hit(t_ray *ray, t_cylinder *cy, t_payload *payload);
 
-	denom = vf3_dot(normal, ray->direction);
-	if (fabs(denom) > 1e-6)
-	{
-		p0l0 = point - ray->origin;
-		*t = vf3_dot(p0l0, normal) / denom;
-		return (*t >= 0);
-	}
-	return (false);
-}
-
-bool	intersect_circle(t_ray *ray, t_cylinder *cy, t_vf3 point, double *t)
-{
-	t_vf3	to_center;
-
-	if (intersect_ray_plane(ray, point, cy->base.rotation, t))
-	{
-		to_center = ray->origin + ray->direction * (*t) - point;
-		if (vf3_dot(to_center, to_center) <= pow(cy->radius, 2))
-			return (true);
-	}
-	return (false);
-}
-
-void	calculate_caps(t_ray *ray, t_cylinder *cy, t_payload *payload)
-{
-	double		t;
-	t_vf3		hit_point;
-	t_vf3		to_center;
-
-	if (intersect_ray_plane(ray, cy->bottom, -cy->base.rotation, &t))
-	{
-		hit_point = ray->origin + ray->direction * t;
-		to_center = hit_point - cy->bottom;
-		if (vf3_dot(to_center, to_center) <= pow(cy->radius, 2)
-			&& t < payload->hit_distance)
-		{
-			payload->hit_distance = t;
-			payload->origin = hit_point;
-			payload->direction = -cy->base.rotation;
-			payload->color = cy->base.color * 1.0 / 255.0;
-		}
-	}
-	if (intersect_ray_plane(ray, cy->top, cy->base.rotation, &t))
-	{
-		hit_point = ray->origin + ray->direction * t;
-		to_center = hit_point - cy->top;
-		if (vf3_dot(to_center, to_center) <= pow(cy->radius, 2)
-			&& t < payload->hit_distance)
-		{
-			payload->hit_distance = t;
-			payload->origin = hit_point;
-			payload->direction = cy->base.rotation;
-			payload->color = cy->base.color * 1.0 / 255.0;
-		}
-	}
-}
-
-static t_vf3	cy_discriminant(t_ray *ray, t_obj_base *obj)
+static t_vf3	discriminant_quad(t_ray *ray, t_obj_base *obj)
 {
 	t_cylinder	*cylinder;
 	t_vf3		oc;
@@ -97,7 +37,7 @@ static t_vf3	cy_discriminant(t_ray *ray, t_obj_base *obj)
 	return (oc);
 }
 
-void	calc_hit_p(t_ray *ray, t_cylinder *cy, double t, t_payload *payload)
+static void	calc_hit(t_ray *ray, t_cylinder *cy, double t, t_payload *payload)
 {
 	t_vf3		hit_point;
 	double		hit_z;
@@ -113,7 +53,7 @@ void	calc_hit_p(t_ray *ray, t_cylinder *cy, double t, t_payload *payload)
 	}
 }
 
-double	get_t(double t1, double t2)
+static double	get_t(double t1, double t2)
 {
 	double	t;
 
@@ -141,15 +81,16 @@ t_payload	cylinder_intersection(t_ray *ray, t_obj_base *obj)
 	double		t;
 
 	cy = obj->obj;
-	dsc_quad = cy_discriminant(ray, obj);
+	dsc_quad = discriminant_quad(ray, obj);
 	payload.hit_distance = FLT_MAX;
 	payload.color = (t_vf3){0.0f, 0.0f, 0.0f};
 	if (dsc_quad.x >= 0)
 	{
 		t = get_t(dsc_quad.y, dsc_quad.z);
 		if (t >= 0)
-			calc_hit_p(ray, cy, t, &payload);
+			calc_hit(ray, cy, t, &payload);
 	}
-	calculate_caps(ray, cy, &payload);
+	calc_top_hit(ray, cy, &payload);
+	calc_bottom_hit(ray, cy, &payload);
 	return (payload);
 }
