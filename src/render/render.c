@@ -36,13 +36,15 @@ int	pixelshader(t_ray *ray)
 	t_payload payload;
 	t_payload payload2;
 	t_vf3 color;
+	double intensity;
 	int bounces;
 	t_light_base *light = scene_location()->lights->content;
 	t_ambient_light *ambient = light->light; 
 
 	bounces = 0;
+	intensity = 1.0f;
 	color = (t_vf3){0.0f,0.0f,0.0f};
-	while (bounces < 3)
+	while (bounces < 9)
 	{
 		payload = trace_ray(ray);
 		if (payload.hit_distance == FLT_MAX)
@@ -54,13 +56,14 @@ int	pixelshader(t_ray *ray)
 		ray->origin = payload.origin + payload.direction * 0.0001f;
 		ray->direction = vf3_norm(((t_point_light*)get_directional_light()->light)->position - payload.origin);
 		payload2 = trace_ray(ray);
-		if (payload2.hit_distance == FLT_MAX)
+		if (payload2.hit_distance == FLT_MAX || payload2.hit_distance > vf3_len(((t_point_light*)get_directional_light()->light)->position - payload.origin))
 		{
-			color += payload.color * vf3_dot(payload.direction, ray->direction);
+			double d = vf3_dot(payload.direction, ray->direction);
+			color += payload.color * intensity * d;
 			break;
 		}
 		ray->origin = payload.origin + payload.direction * 0.0001f;
-		ray->direction = vf3_reflect(ray2.direction, payload.origin);
+		ray->direction = vf3_reflect(ray2.direction, payload.direction);
 		bounces++;
 	}
 	return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
@@ -126,9 +129,9 @@ t_payload	plane_intercetion(t_ray *ray, t_obj_base *obj)
 	if (vf3_dot(obj->rotation , ray->direction) != 0.0)
 	{
 		payload.hit_distance = -vf3_dot(ray->origin - obj->position, obj->rotation) / vf3_dot(obj->rotation, ray->direction);
-		if (payload.hit_distance > 0.00001)
+		if (payload.hit_distance > 0.0)
 		{
-			payload.direction = -obj->rotation;
+			payload.direction = obj->rotation;
 			payload.origin = ray->origin + ray->direction * payload.hit_distance;
 			payload.color = obj->color/255;
 			return (payload);
