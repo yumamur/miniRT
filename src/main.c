@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 21:02:11 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/28 08:31:01 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 12:32:24 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "mlx.h"
 
 #include <stdio.h>
-
 
 int	main(int argc, char *argv[])
 {
