@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 02:03:26 by yumamur           #+#    #+#             */
-/*   Updated: 2024/05/28 08:27:44 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 19:40:33 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_light_base	*get_ambient_light(void)
 	return (NULL);
 }
 
-t_light_base	*get_directional_light(void)
+t_light_base	*get_point_light(void)
 {
 	t_list	*list;
 

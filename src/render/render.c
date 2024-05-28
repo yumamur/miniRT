@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/05/28 17:24:59 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 19:46:49 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 
 int	pixelshader(t_ray *ray)
 {
-	t_payload	payload;
-	t_payload	payload2;
-	t_vf3		color;
-	double		intensity;
-	t_light_base *light = scene_location()->lights->content;
-	t_ambient_light *ambient = light->light;
+	t_payload		payload;
+	t_payload		payload2;
+	t_vf3			color;
+	double			intensity;
+	t_light_base	*light;
+	t_ambient_light *ambient;
 
+	light = scene_location()->lights->content;
+	ambient = light->light;
 	intensity = 1.0f;
 	color = (t_vf3){0.0f,0.0f,0.0f};
 	payload = trace_ray(ray);
@@ -34,9 +36,9 @@ int	pixelshader(t_ray *ray)
 	}
 	t_ray ray2 = *ray;
 	ray->origin = payload.origin + payload.direction * 0.0001f;
-	ray->direction = vf3_norm(((t_point_light*)get_directional_light()->light)->position - payload.origin);
+	ray->direction = vf3_norm(((t_point_light*)get_point_light()->light)->position - payload.origin);
 	payload2 = trace_ray(ray);
-	if (payload2.hit_distance == FLT_MAX || payload2.hit_distance > vf3_len(((t_point_light*)get_directional_light()->light)->position - payload.origin))
+	if (payload2.hit_distance == FLT_MAX || payload2.hit_distance > vf3_len(((t_point_light*)get_point_light()->light)->position - payload.origin))
 	{
 		double d = vf3_dot(payload.direction, ray->direction);
 		color += payload.color * intensity * d;
@@ -49,30 +51,29 @@ int	pixelshader(t_ray *ray)
 
 t_payload	trace_ray(t_ray *ray)
 {
-	t_scene *scene = scene_location();	
-	t_list *temp = scene->objects;
+	t_list *temp;
 	t_payload load;
 	t_payload close;
 
+	temp = scene_location()->objects;
 	close.hit_distance = FLT_MAX;
-	while (scene->objects != NULL)
+	while (temp != NULL)
 	{
-		t_obj_base *obj = scene->objects->content;
-		if(obj->type == SPHERE)
+		t_obj_base *obj = temp->content;
+		if (obj->type == SPHERE)
 			load = sphere_intercetion(ray, obj);
-		else if(obj->type == PLANE)
+		else if (obj->type == PLANE)
 		{
-			if(vf3_dot(obj->rotation, ray->direction) > 0.0f)
+			if (vf3_dot(obj->rotation, ray->direction) > 0.0f)
 				obj->rotation *= -1;
 			load = plane_intercetion(ray, obj);
 		}
-		else if(obj->type == CYLINDER)
+		else if (obj->type == CYLINDER)
 			load = cylinder_intersection(ray, obj);
-		if(loadd.hit_distance > 0 && load.hit_distance < close.hit_distance)	
+		if (load.hit_distance > 0 && load.hit_distance < close.hit_distance)	
 			close = load;
-		scene->objects = scene->objects->next;
+		temp = temp->next;
 	}
-	scene->objects = temp;
 	return (close);
 }
 
