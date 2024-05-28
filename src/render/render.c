@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/05/28 21:03:33 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 22:22:07 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 
 void	pixelshader_2(t_ray *ray, t_payload *payload, t_vf3 *color)
 {
-	t_ray			ray2;
 	double			d;
 	t_payload		payload2;
 	t_ambient_light	*ambient;
@@ -25,10 +24,9 @@ void	pixelshader_2(t_ray *ray, t_payload *payload, t_vf3 *color)
 
 	ambient = ((t_light_base *)scene_location()->lights->content)->light;
 	point = (t_point_light *)get_point_light()->light;
-	ray2 = *ray;
 	ray->origin = payload->origin + payload->direction * 0.0001f;
-	ray->direction = vf3_norm(point->position - payload->origin)
-		* point->intensity;
+	ray->direction = vf3_norm(point->position - payload->origin);
+	payload->color *= point->base.color / 255 * point->intensity;
 	payload2 = trace_ray(ray);
 	if (payload2.hit_distance == FLT_MAX
 		|| payload2.hit_distance > vf3_len((point->position - payload->origin)))
@@ -38,8 +36,7 @@ void	pixelshader_2(t_ray *ray, t_payload *payload, t_vf3 *color)
 		*color += payload->color * d;
 		return ;
 	}
-	ray->origin = payload->origin + payload->direction * 0.0001f;
-	ray->direction = vf3_reflect(ray2.direction, payload->direction);
+	*color += ambient->base.color / 255 * ambient->ratio;
 }
 
 int	pixelshader(t_ray *ray)
