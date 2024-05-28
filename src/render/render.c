@@ -6,7 +6,7 @@
 /*   By: yumamur <yumamur@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/30 06:21:59 by mugurel           #+#    #+#             */
-/*   Updated: 2024/05/28 19:46:49 by yumamur          ###   ########.fr       */
+/*   Updated: 2024/05/28 20:14:24 by yumamur          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,50 +15,63 @@
 #include "../util/util.h"
 #include "../objects/objects.h"
 
+void	pixelshader_2(t_ray *ray, t_payload *payload, t_vf3 *color)
+{
+	t_ray			ray2;
+	double			d;
+	t_payload		payload2;
+	t_ambient_light	*ambient;
+	t_point_light	*point;
+
+	ambient = ((t_light_base *)scene_location()->lights->content)->light;
+	point = (t_point_light *)get_point_light()->light;
+	ray2 = *ray;
+	ray->origin = payload->origin + payload->direction * 0.0001f;
+	ray->direction = vf3_norm(point->position - payload->origin)
+		* point->intensity;
+	payload2 = trace_ray(ray);
+	if (payload2.hit_distance == FLT_MAX
+		|| payload2.hit_distance > vf3_len((point->position - payload->origin)))
+	{
+		d = vf3_dot(payload->direction, ray->direction);
+		*color += ambient->base.color / 255 * ambient->ratio;
+		*color += payload->color * d;
+		return ;
+	}
+	ray->origin = payload->origin + payload->direction * 0.0001f;
+	ray->direction = vf3_reflect(ray2.direction, payload->direction);
+}
+
 int	pixelshader(t_ray *ray)
 {
 	t_payload		payload;
-	t_payload		payload2;
 	t_vf3			color;
-	double			intensity;
-	t_light_base	*light;
-	t_ambient_light *ambient;
+	t_ambient_light	*ambient;
 
-	light = scene_location()->lights->content;
-	ambient = light->light;
-	color = (t_vf3){0.0f,0.0f,0.0f};
+	ambient = ((t_light_base *)scene_location()->lights->content)->light;
+	color = (t_vf3){0.0f, 0.0f, 0.0f};
 	payload = trace_ray(ray);
 	if (payload.hit_distance == FLT_MAX)
 	{
-		color += light->color/255 * ambient->ratio;
+		color += ambient->base.color / 255 * ambient->ratio;
 		return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
 	}
-	t_ray ray2 = *ray;
-	ray->origin = payload.origin + payload.direction * 0.0001f;
-	ray->direction = vf3_norm(((t_point_light*)get_point_light()->light)->position - payload.origin);
-	payload2 = trace_ray(ray);
-	if (payload2.hit_distance == FLT_MAX || payload2.hit_distance > vf3_len(((t_point_light*)get_point_light()->light)->position - payload.origin))
-	{
-		double d = vf3_dot(payload.direction, ray->direction);
-		color += payload.color * intensity * d;
-		return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
-	}
-	ray->origin = payload.origin + payload.direction * 0.0001f;
-	ray->direction = vf3_reflect(ray2.direction, payload.direction);
+	pixelshader_2(ray, &payload, &color);
 	return (color_vf_int(vf3_clamp(color, 0.0f, 1.0f), 255));
 }
 
 t_payload	trace_ray(t_ray *ray)
 {
-	t_list *temp;
-	t_payload load;
-	t_payload close;
+	t_list		*temp;
+	t_payload	load;
+	t_payload	close;
+	t_obj_base	*obj;
 
 	temp = scene_location()->objects;
 	close.hit_distance = FLT_MAX;
 	while (temp != NULL)
 	{
-		t_obj_base *obj = temp->content;
+		obj = temp->content;
 		if (obj->type == SPHERE)
 			load = sphere_intercetion(ray, obj);
 		else if (obj->type == PLANE)
@@ -69,7 +82,7 @@ t_payload	trace_ray(t_ray *ray)
 		}
 		else if (obj->type == CYLINDER)
 			load = cylinder_intersection(ray, obj);
-		if (load.hit_distance > 0 && load.hit_distance < close.hit_distance)	
+		if (load.hit_distance > 0 && load.hit_distance < close.hit_distance)
 			close = load;
 		temp = temp->next;
 	}
